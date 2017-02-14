@@ -28,4 +28,9 @@ public class Vehicle implements Visualizable {
     public ArrayList<Rectangle2D> getParts(){
         return this.parts;
     }
+    
+    @Override
+    public int getPriorityInt(){
+        return 1;
+    }
 }

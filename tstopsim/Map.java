@@ -12,13 +12,7 @@ public class Map extends JComponent {
     public Map(ArrayList<Visualizable> arr) {
         this.components = arr;
         components.sort((v1, v2) -> {
-            if ((v1 instanceof Vehicle && v2 instanceof Vehicle) || (v1 instanceof RoadTile && v2 instanceof RoadTile)) {
-                return 0;
-            } else if (v1 instanceof RoadTile) {
-                return -1;
-            } else {
-                return 1;
-            }
+            return Integer.compare(v1.getPriorityInt(), v2.getPriorityInt());
         });
     }
     @Override
