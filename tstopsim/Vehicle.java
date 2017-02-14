@@ -14,6 +14,7 @@ public class Vehicle implements Visualizable {
     double xPos,yPos;
     private Direction dir;
     private ArrayList<Rectangle2D> parts;
+    
     @Override
     public ArrayList<Rectangle2D> assemble() {
         ArrayList<Rectangle2D> components = new ArrayList<>();
