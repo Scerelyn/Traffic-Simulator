@@ -9,9 +9,11 @@ public class Runner {
         JFrame jf = new JFrame();
         Vehicle vh = new Vehicle();
         StraightRoadTile srt = new StraightRoadTile();
+        Light l = new Light();
         ArrayList<Visualizable> viz = new ArrayList<>();
         viz.add(vh);
         viz.add(srt);
+        viz.add(l);
         Map m = new Map(viz);
         jf.add(m);
         m.repaint();

@@ -11,7 +11,7 @@ public class Vehicle implements Visualizable {
     }
     
     public static final int SIDE_LENGTH = (int)(RoadTile.ROAD_DIMENTION*0.3);
-    double xPos,yPos;
+    private double xPos,yPos;
     private Direction dir;
     private ArrayList<Rectangle2D> parts;
     
@@ -24,7 +24,6 @@ public class Vehicle implements Visualizable {
         components.add(new Rectangle2D.Double(xPos + 0.8*SIDE_LENGTH, xPos, yPos + 0.2*SIDE_LENGTH, yPos + 0.2*SIDE_LENGTH)); // top right
         components.add(new Rectangle2D.Double(xPos, xPos + 0.8*SIDE_LENGTH, yPos + 0.2*SIDE_LENGTH, yPos + 0.2*SIDE_LENGTH)); //bottom right
         components.add(new Rectangle2D.Double(xPos + 0.8*SIDE_LENGTH, xPos + 0.8*SIDE_LENGTH, yPos + 0.2*SIDE_LENGTH, yPos + 0.2*SIDE_LENGTH)); //bottom left
-        
         return components;
     }
     

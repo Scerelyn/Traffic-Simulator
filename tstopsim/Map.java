@@ -13,7 +13,7 @@ public class Map extends JComponent {
      * Creates a map object with a given ArrayList of Visualizable objects, then
      * sorts the list by their priority integer
      *
-     * @param arr The ArrayList of Visulizable-implementing objects
+     * @param arr The ArrayList of Visualizable-implementing objects
      */
     public Map(ArrayList<Visualizable> arr) {
         this.components = arr;
