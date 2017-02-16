@@ -7,12 +7,23 @@ import java.awt.Color;
 public class Light implements Visualizable{
     private ArrayList<ColoredRectangle2D> parts;
     private double xPos,yPos;
+    private Direction dir;
     
     public Light(){
         xPos=0;
         yPos=0;
+        dir = Direction.NORTH;
         parts = assemble();
     }
+
+    public Light(double xPos, double yPos, Direction dir) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.dir = dir;
+        this.parts = assemble();
+    }
+    
+    
     
     @Override
     public ArrayList<ColoredRectangle2D> assemble() {
