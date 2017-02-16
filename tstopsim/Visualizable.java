@@ -12,7 +12,7 @@ public interface Visualizable {
      *
      * @return An ArrayList of Rectangle2D objects
      */
-    public ArrayList<Rectangle2D> assemble();
+    public ArrayList<ColoredRectangle2D> assemble();
 
     /**
      * This simply returns the ArrayList created from assemble(), assuming it is
@@ -20,7 +20,7 @@ public interface Visualizable {
      *
      * @return An ArrayList of Rectangle2D objects
      */
-    public ArrayList<Rectangle2D> getParts();
+    public ArrayList<ColoredRectangle2D> getParts();
 
     /**
      * Returns the priority integer of the class which implements this

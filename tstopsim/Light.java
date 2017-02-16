@@ -2,9 +2,10 @@ package tstopsim;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class Light implements Visualizable{
-    private ArrayList<Rectangle2D> parts;
+    private ArrayList<ColoredRectangle2D> parts;
     private double xPos,yPos;
     
     public Light(){
@@ -14,12 +15,12 @@ public class Light implements Visualizable{
     }
     
     @Override
-    public ArrayList<Rectangle2D> assemble() {
-        ArrayList<Rectangle2D> components = new ArrayList<>();
-        Rectangle2D box = new Rectangle2D.Double(xPos,yPos,0.3*RoadTile.ROAD_DIMENTION,0.1*RoadTile.ROAD_DIMENTION);
-        Rectangle2D green = new Rectangle2D.Double(0.1*box.getWidth()+xPos,yPos+box.getHeight(),0.2*box.getWidth(),0.2*box.getHeight());
-        Rectangle2D yellow = new Rectangle2D.Double(0.4*box.getWidth()+xPos,yPos+box.getHeight(),0.2*box.getWidth(),0.2*box.getHeight());
-        Rectangle2D red = new Rectangle2D.Double(0.7*box.getWidth()+xPos,yPos+box.getHeight(),0.2*box.getWidth(),0.2*box.getHeight());
+    public ArrayList<ColoredRectangle2D> assemble() {
+        ArrayList<ColoredRectangle2D> components = new ArrayList<>();
+        ColoredRectangle2D box = new ColoredRectangle2D(xPos,yPos,0.3*RoadTile.ROAD_DIMENTION,0.1*RoadTile.ROAD_DIMENTION,Color.BLACK);
+        ColoredRectangle2D green = new ColoredRectangle2D(0.1*box.getRect().getWidth()+xPos,yPos+box.getRect().getHeight(),0.2*box.getRect().getWidth(),0.2*box.getRect().getHeight(),Color.GREEN);
+        ColoredRectangle2D yellow = new ColoredRectangle2D(0.4*box.getRect().getWidth()+xPos,yPos+box.getRect().getHeight(),0.2*box.getRect().getWidth(),0.2*box.getRect().getHeight(),Color.YELLOW);
+        ColoredRectangle2D red = new ColoredRectangle2D(0.7*box.getRect().getWidth()+xPos,yPos+box.getRect().getHeight(),0.2*box.getRect().getWidth(),0.2*box.getRect().getHeight(),Color.RED);
         components.add(box);
         components.add(green);
         components.add(red);
@@ -28,7 +29,7 @@ public class Light implements Visualizable{
     }
 
     @Override
-    public ArrayList<Rectangle2D> getParts() {
+    public ArrayList<ColoredRectangle2D> getParts() {
         return this.parts;
     }
 

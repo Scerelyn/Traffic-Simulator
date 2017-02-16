@@ -7,6 +7,7 @@ public class Runner {
 
     public static void main(String[] args) {
         JFrame jf = new JFrame();
+        jf.setBounds(20,20,400,400);
         Vehicle vh = new Vehicle();
         StraightRoadTile srt = new StraightRoadTile();
         Light l = new Light();

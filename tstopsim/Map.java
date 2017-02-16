@@ -26,9 +26,9 @@ public class Map extends JComponent {
     public void paint(Graphics g){
         Graphics2D g2 = (Graphics2D)g;
         for(Visualizable v : components){
-            for(Rectangle2D rect : v.getParts()){
-                g2.setPaint( new Color( (int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256) ) );
-                g2.fill(rect);
+            for(ColoredRectangle2D rect : v.getParts()){
+                g2.setPaint( rect.getColor() );
+                g2.fill(rect.getRect());
             }
         }
     }
