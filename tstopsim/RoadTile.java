@@ -8,7 +8,7 @@ public abstract class RoadTile implements Visualizable{
     public static final int ROAD_DIMENTION = 200; //pixels side, length and width of the tile. This is the only given constant, so everything else scales
     protected ArrayList<ColoredRectangle2D> parts;
     protected Vehicle[][] carSpots = new Vehicle[2][2]; 
-    protected Light[] lights = new Light[4];
+    protected ArrayList<Light> lights = new ArrayList<>();
     protected double xPos,yPos;
     protected Direction dir;
     @Override
@@ -29,51 +29,30 @@ public abstract class RoadTile implements Visualizable{
         this.dir = dir;
         this.parts = assemble();
     }
-    
+        
     @Override
     public int getPriorityInt() {
         return 0;
     }
-
+    
     public Vehicle[][] getCarSpots() {
         return carSpots;
     }
 
-    public void setCarSpots(Vehicle[][] carSpots) {
-        this.carSpots = carSpots;
-    }
-
-    public Light[] getLights() {
+    public ArrayList<Light> getLights() {
         return lights;
-    }
-
-    public void setLights(Light[] lights) {
-        this.lights = lights;
     }
 
     public double getxPos() {
         return xPos;
     }
 
-    public void setxPos(double xPos) {
-        this.xPos = xPos;
-    }
-
     public double getyPos() {
         return yPos;
-    }
-
-    public void setyPos(double yPos) {
-        this.yPos = yPos;
     }
 
     public Direction getDir() {
         return dir;
     }
-
-    public void setDir(Direction dir) {
-        this.dir = dir;
-    }
-    
     
 }

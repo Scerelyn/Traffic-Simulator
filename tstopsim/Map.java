@@ -46,6 +46,12 @@ public class Map extends JComponent {
                     g2.setPaint( piece.getParts().get(part).getColor() );
                     g2.fill( pieceRect );
                 }
+                for(Light l : piece.getLights()){
+                    for(ColoredRectangle2D part : l.getParts()){
+                        g2.setPaint(part.getColor());
+                        g2.fill(part.getRect());
+                    }
+                }
             }
         }
         for(Visualizable v : components){
