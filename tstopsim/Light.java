@@ -1,6 +1,5 @@
 package tstopsim;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.awt.Color;
 
@@ -9,10 +8,10 @@ public class Light implements Visualizable{
     private double xPos,yPos;
     private Direction dir;
     
-    public Light(){
+    public Light(Direction dir){
         xPos=0;
         yPos=0;
-        dir = Direction.NORTH;
+        this.dir = dir;
         parts = assemble();
     }
 

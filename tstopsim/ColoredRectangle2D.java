@@ -13,6 +13,11 @@ public class ColoredRectangle2D{
         this.color = c;
     }
     
+    public ColoredRectangle2D(double width, double height, Color c){
+        this.rect = new Rectangle2D.Double(0, 0, width, height);
+        this.color = c;
+    }
+    
     public Rectangle2D getRect() {
         return rect;
     }

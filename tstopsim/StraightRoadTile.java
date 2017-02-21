@@ -4,13 +4,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class StraightRoadTile extends RoadTile{
-    private double xPos,yPos;
-    private Direction dir;
     
-    public StraightRoadTile(){
+    public StraightRoadTile(Direction dir){
         this.xPos = 0;
         this.yPos = 0;
-        this.dir = Direction.NORTH;
+        this.dir = dir;
         this.parts = assemble();
     }
 
@@ -47,5 +45,5 @@ public class StraightRoadTile extends RoadTile{
     public int getPriorityInt() {
         return 0;
     }
-
+    
 }
