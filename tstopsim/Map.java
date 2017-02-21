@@ -40,8 +40,7 @@ public class Map extends JComponent {
         for(int y = 0; y < this.city.length; y++){
             for(int x = 0; x < this.city[y].length; x++){
                 RoadTile piece = this.city[y][x];
-                System.out.println(x + " " + y);
-                piece.setBounds(x*RoadTile.ROAD_DIMENTION, y*RoadTile.ROAD_DIMENTION);
+                piece.setBounds(x*RoadTile.ROAD_DIMENTION, y*RoadTile.ROAD_DIMENTION, piece.getDir());                
                 for(int part = 0; part < this.city[y][x].getParts().size(); part++){
                     Rectangle2D pieceRect = piece.getParts().get(part).getRect();
                     g2.setPaint( piece.getParts().get(part).getColor() );

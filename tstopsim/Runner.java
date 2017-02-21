@@ -8,10 +8,10 @@ public class Runner {
     public static void main(String[] args) {
         JFrame jf = new JFrame();
         jf.setBounds(20,20,400,400);
-        Vehicle vh = new Vehicle(40,40, Direction.EAST);
-        Vehicle vh2 = new Vehicle(40,40, Direction.EAST);
+        Vehicle vh = new Vehicle(40,40, Direction.WEST);
+        Vehicle vh2 = new Vehicle(100,100, Direction.SOUTH);
         StraightRoadTile srt = new StraightRoadTile(0,0,Direction.WEST);
-        StraightRoadTile srt2 = new StraightRoadTile(0,0,Direction.WEST);
+        StraightRoadTile srt2 = new StraightRoadTile(0,0,Direction.NORTH);
         Light l = new Light(10,10,Direction.SOUTH);
         ArrayList<Visualizable> viz = new ArrayList<>();
         viz.add(vh);
@@ -22,7 +22,7 @@ public class Runner {
         m.setCity(
             new RoadTile[][]{
                 {srt,srt2},
-                
+                {srt,srt2},
             }
         );
         
