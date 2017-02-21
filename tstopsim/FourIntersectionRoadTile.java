@@ -7,6 +7,7 @@ public class FourIntersectionRoadTile extends RoadTile{
 
     public FourIntersectionRoadTile(double x, double y, Direction dir){
         super(x, y, dir);
+        setupLights();
     }
     
     @Override
@@ -21,5 +22,13 @@ public class FourIntersectionRoadTile extends RoadTile{
         
         return components;
     }
-
+    
+    @Override
+    public void setupLights(){
+        lights.clear();
+        this.lights.add( new Light(xPos+0.1*RoadTile.ROAD_DIMENTION, yPos, Direction.SOUTH) ); //top left
+        this.lights.add( new Light(xPos+0.9*RoadTile.ROAD_DIMENTION, yPos+0.1*RoadTile.ROAD_DIMENTION ,Direction.WEST) ); //top right
+        this.lights.add( new Light(xPos, yPos+0.6*RoadTile.ROAD_DIMENTION ,Direction.EAST) );//bottom left
+        this.lights.add( new Light(xPos+0.6*RoadTile.ROAD_DIMENTION, yPos+0.9*RoadTile.ROAD_DIMENTION, Direction.NORTH) );
+    }
 }

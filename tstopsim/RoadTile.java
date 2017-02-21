@@ -17,10 +17,7 @@ public abstract class RoadTile implements Visualizable{
     }
     
     public RoadTile(double x, double y, Direction dir){
-        this.xPos = x;
-        this.yPos = y;
-        this.dir = dir;
-        this.parts = assemble();
+        setBounds(x,y,dir);
     }
     
     public void setBounds(double x, double y, Direction dir){
@@ -28,8 +25,11 @@ public abstract class RoadTile implements Visualizable{
         this.yPos = y;
         this.dir = dir;
         this.parts = assemble();
+        setupLights();
     }
-        
+    
+    public void setupLights(){}
+    
     @Override
     public int getPriorityInt() {
         return 0;

@@ -13,17 +13,19 @@ public class Runner {
         StraightRoadTile srtHorz = new StraightRoadTile(0,0,Direction.WEST);
         StraightRoadTile srtVert = new StraightRoadTile(0,0,Direction.NORTH);
         FourIntersectionRoadTile inter = new FourIntersectionRoadTile(0,0,Direction.NORTH);
+        NonDrivableRoadTile ndrt = new NonDrivableRoadTile(0,0);
         Light l = new Light(10,10,Direction.WEST);
         ArrayList<Visualizable> viz = new ArrayList<>();
         //viz.add(vh);
-        viz.add(vh2);
+        //viz.add(vh2);
         viz.add(l);
         Map m = new Map(1,1,viz);
         
         m.setCity(
             new RoadTile[][]{
-                {srtHorz,srtVert},
-                {srtHorz,inter},
+                {ndrt,      srtVert,    ndrt},
+                {srtHorz,   inter,      srtHorz},
+                {ndrt,      srtVert,    ndrt},
             }
         );
         
