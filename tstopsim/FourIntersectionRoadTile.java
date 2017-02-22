@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class FourIntersectionRoadTile extends RoadTile{
 
-    public FourIntersectionRoadTile(double x, double y, Direction dir){
-        super(x, y, dir);
+    public FourIntersectionRoadTile(double x, double y){
+        super(x, y, Direction.NORTH);
         setupLights();
     }
     
