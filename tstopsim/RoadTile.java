@@ -11,16 +11,17 @@ public abstract class RoadTile implements Visualizable{
     protected ArrayList<Light> lights = new ArrayList<>();
     protected double xPos,yPos;
     protected Direction dir;
-    @Override
-    public ArrayList<ColoredRectangle2D> getParts() {
-        return this.parts;
-    }
     
     public RoadTile(double x, double y, Direction dir){
         setBounds(x,y,dir);
     }
     
-    public void setBounds(double x, double y, Direction dir){
+    @Override
+    public ArrayList<ColoredRectangle2D> getParts() {
+        return this.parts;
+    }
+    
+    public final void setBounds(double x, double y, Direction dir){
         this.xPos = x;
         this.yPos = y;
         this.dir = dir;
