@@ -23,6 +23,14 @@ public class Light implements Visualizable{
         this.parts = assemble();
     }
     
+    public Light(double xPos, double yPos, Direction dir, int lightState){
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.dir = dir;
+        this.lightState = lightState;
+        this.parts = assemble();
+    }
+    
     //color of on/off
     //(lightState >= 0 && lightState <= 4) ? Color.RED : Color.RED.darker().darker()
     //(lightState >= 5 && lightState <= 6) ? Color.RED : Color.RED.darker().darker()
@@ -34,7 +42,6 @@ public class Light implements Visualizable{
         ColoredRectangle2D green;
         ColoredRectangle2D yellow;
         ColoredRectangle2D red;
-        System.out.println(this.lightState);
         switch(this.dir){
             
             //color of on/off. these are in the color of the colered rectangle
@@ -104,5 +111,9 @@ public class Light implements Visualizable{
     
     public int getLightState(){
         return this.lightState;
+    }
+
+    public Direction getDir() {
+        return dir;
     }
 }

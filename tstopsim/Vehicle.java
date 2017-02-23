@@ -1,12 +1,11 @@
 package tstopsim;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.awt.Color;
 
 public class Vehicle implements Visualizable {
     public static final int SIDE_LENGTH = (int)(RoadTile.ROAD_DIMENTION*0.3);
-    private double xPos,yPos;
+    private double xPos,yPos,xMap,yMap,xTile,yTile; //pos is on the map for drawing (the jframe x/y), map is relative to the map (tile x/y), tile is the roadtile x/y for the tile's array (inner tile x/y)
     private Direction dir;
     private ArrayList<ColoredRectangle2D> parts;
     
@@ -79,5 +78,29 @@ public class Vehicle implements Visualizable {
     @Override
     public void rebuild(){
         this.parts = assemble();
+    }
+    
+    //0,0 1,0
+    //0,1 1,1
+    /**
+     * Moves the vehicle internally, as in through the map's tile's carSpots[]
+     * @param on
+     * @param next 
+     */
+    public void internalMove(RoadTile on, RoadTile next){
+        switch(dir){
+            case NORTH:
+                if(on instanceof TurnRoadTile){
+                    if(yTile == 1 && xTile == 0){
+                        xTile = 0;
+                    }
+                }
+                break;
+            case SOUTH:
+            case WEST:
+            case EAST:
+            default:
+                System.out.println("Invalid direction " + dir + " when vehicle " + this + " moved internally");
+        }
     }
 }

@@ -17,10 +17,8 @@ public class LightCycler extends TimerTask{
     
     @Override
     public void run() {
-        
         for(Light l : lights){
             l.changeLightState();
-            //System.out.println(l.getLightState());
         }
         m.repaint();
     }
