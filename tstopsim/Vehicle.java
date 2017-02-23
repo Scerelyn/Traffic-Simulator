@@ -80,19 +80,130 @@ public class Vehicle implements Visualizable {
         this.parts = assemble();
     }
     
+    /**
+     * Rotates the vehicle a direction
+     *
+     * @param dir The direction to rotate to
+     */
+    public void rotate(Direction dir){
+        this.dir = dir;
+        this.rebuild();
+    }
+    
+    /**
+     * Randomly gets the left or right direction
+     *
+     * @return A random direction that is either to the left or right of the
+     * current direction
+     */
+    public Direction getRandomTurn(){
+        return Math.random() <= 0.5 ? dir.getLeft() : dir.getRight();
+    }
+    
+    /**
+     * Randomly returns true or false, used for deciding if the vehicle should
+     * do a turn or not
+     *
+     * @return Randomly either true or false
+     */
+    public boolean doATurn(){
+        return (int)(Math.random()*2) == 1;
+    }
     //0,0 1,0
     //0,1 1,1
     /**
      * Moves the vehicle internally, as in through the map's tile's carSpots[]
-     * @param on
-     * @param next 
+     *
+     * @param on The tile that this vehicle is on
+     * @param next The title Adjacent to the on tile that the vehicle will move
+     * to
      */
+    //this method will get huge
     public void internalMove(RoadTile on, RoadTile next){
         switch(dir){
             case NORTH:
                 if(on instanceof TurnRoadTile){
-                    if(yTile == 1 && xTile == 0){
-                        xTile = 0;
+                    switch(on.getDir()){
+                        case NORTH:
+                            if(xTile == 1 && yTile == 1){ //facing the center of the road, what
+                                this.rotate(Direction.EAST);
+                                internalMove(on,next);
+                            } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.getLightByDirection(Direction.SOUTH) != null 
+                                    && next.getLightByDirection(Direction.SOUTH).getLightState() <= 4 && next.getLightByDirection(Direction.SOUTH).getLightState() >= 0){ 
+                                on.getCarSpots()[0][1] = null;
+                                next.getCarSpots()[1][1] = this;
+                                xTile = 1;
+                                yTile = 1;
+                            } else if(xTile == 0 && yTile == 0){ //wrong way
+                                rotate(dir.getOpposite());
+                                internalMove(on,next);
+                            } else if(xTile == 0 && yTile == 1){ //also wrongway
+                                rotate(dir.getOpposite());
+                                internalMove(on,next);
+                            }
+                            break;
+                        case SOUTH:
+                            if(xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null){
+                                on.getCarSpots()[1][1] = null;
+                                on.getCarSpots()[0][1] = this;
+                                xTile = 1;
+                                yTile = 0;
+                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){ //on the corner, so turn
+                                this.rotate(dir.getLeft());
+                                on.getCarSpots()[0][1] = null;
+                                on.getCarSpots()[0][0] = this;
+                                xTile = 0;
+                                yTile = 0;
+                            } else if(xTile == 0 && yTile == 0){ //shouldnt be here, should've been facing west
+                                this.rotate(Direction.WEST);
+                                internalMove(on,next);
+                            } else if(xTile == 0 && yTile == 1){ //on the wrong lane
+                                this.rotate(dir.getOpposite());
+                                internalMove(on,next);
+                            }
+                            break;
+                        case WEST:
+                            if(xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null){ //corner
+                                on.getCarSpots()[1][1] = null;
+                                on.getCarSpots()[0][1] = this;
+                                xTile = 1;
+                                yTile = 0;
+                            } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.getLightByDirection(Direction.SOUTH) != null 
+                                    && next.getLightByDirection(Direction.SOUTH).getLightState() <= 4 && next.getLightByDirection(Direction.SOUTH).getLightState() >= 0){ //on the edge
+                                on.getCarSpots()[0][1] = null;
+                                next.getCarSpots()[1][1] = this;
+                                xTile = 1;
+                                yTile = 1;
+                            } else if(xTile == 0 && xTile == 0){ //wrong way
+                                rotate(dir.getOpposite());
+                                internalMove(on,next);
+                            } else if(xTile == 0 && yTile == 1){ //facing incorrectly
+                                rotate(Direction.EAST);
+                                internalMove(on,next);
+                            }
+                            break;
+                        case EAST:
+                            if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.getLightByDirection(Direction.SOUTH) != null 
+                                    && next.getLightByDirection(Direction.SOUTH).getLightState() <= 4 && next.getLightByDirection(Direction.SOUTH).getLightState() >= 0){ 
+                                rotate(dir.getRight());
+                                next.getCarSpots()[1][0] = this;
+                                on.getCarSpots()[1][1] = null;
+                                xTile = 0;
+                                yTile = 1;
+                                
+                            } else if(xTile == 1 && yTile == 0){
+                                rotate(Direction.WEST);
+                                internalMove(on,next);
+                            } else if(xTile == 0 && xTile == 0){
+                                rotate(Direction.SOUTH);
+                                internalMove(on,next);
+                            } else if(xTile == 0 && yTile == 1){
+                                rotate(dir.getOpposite());
+                                internalMove(on,next);
+                            }
+                            break;
+                        default:
+                            System.out.println("Undefined behavior when vehicle traversed in direction: " + dir);
                     }
                 }
                 break;

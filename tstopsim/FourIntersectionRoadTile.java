@@ -31,13 +31,4 @@ public class FourIntersectionRoadTile extends RoadTile{
         this.lights.add( new Light(xPos, yPos+0.6*RoadTile.ROAD_DIMENTION ,Direction.EAST) );//bottom left
         this.lights.add( new Light(xPos+0.6*RoadTile.ROAD_DIMENTION, yPos+0.9*RoadTile.ROAD_DIMENTION, Direction.NORTH,7) );
     }
-    
-    public Light getLightByDirection(Direction nDir){
-        for(Light l : this.lights){
-            if(l.getDir() == nDir){
-                return l;
-            }
-        }
-        return null;
-    }
 }

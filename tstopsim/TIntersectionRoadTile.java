@@ -69,13 +69,4 @@ public class TIntersectionRoadTile extends RoadTile{
                 System.out.println("Invalid direction " + dir + " when setting up the lights of " + this);
         }
     }
-    
-    public Light getLightByDirection(Direction nDir){
-        for(Light l : this.lights){
-            if(l.getDir() == nDir){
-                return l;
-            }
-        }
-        return null;
-    }
 }

@@ -74,4 +74,12 @@ public abstract class RoadTile implements Visualizable{
         return dir;
     }
     
+    public Light getLightByDirection(Direction nDir){
+        for(Light l : this.lights){
+            if(l.getDir() == nDir){
+                return l;
+            }
+        }
+        return null;
+    }
 }
