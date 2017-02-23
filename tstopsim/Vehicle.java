@@ -75,4 +75,9 @@ public class Vehicle implements Visualizable {
     public int getPriorityInt(){
         return 1;
     }
+    
+    @Override
+    public void rebuild(){
+        this.parts = assemble();
+    }
 }

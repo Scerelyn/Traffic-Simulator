@@ -30,4 +30,11 @@ public interface Visualizable {
      * @return
      */
     public int getPriorityInt();
+    
+    /**
+     * Calls the assemble method, but this is to be used when the object
+     * implementing this is not being constructed, but rather is being changed
+     * ie: moved
+     */
+    public void rebuild();
 }

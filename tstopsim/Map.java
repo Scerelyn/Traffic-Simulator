@@ -39,14 +39,13 @@ public class Map extends JComponent {
         Graphics2D g2 = (Graphics2D)g;
         for(int y = 0; y < this.city.length; y++){
             for(int x = 0; x < this.city[y].length; x++){
-                RoadTile piece = this.city[y][x];
-                piece.setBounds(x*RoadTile.ROAD_DIMENTION, y*RoadTile.ROAD_DIMENTION, piece.getDir());                
+                RoadTile tile = this.city[y][x];
                 for(int part = 0; part < this.city[y][x].getParts().size(); part++){
-                    Rectangle2D pieceRect = piece.getParts().get(part).getRect();
-                    g2.setPaint( piece.getParts().get(part).getColor() );
+                    Rectangle2D pieceRect = tile.getParts().get(part).getRect();
+                    g2.setPaint(tile.getParts().get(part).getColor() );
                     g2.fill( pieceRect );
                 }
-                for(Light l : piece.getLights()){
+                for(Light l : tile.getLights()){
                     for(ColoredRectangle2D part : l.getParts()){
                         g2.setPaint(part.getColor());
                         g2.fill(part.getRect());
@@ -68,5 +67,9 @@ public class Map extends JComponent {
     
     public void setCity(RoadTile[][] city){
         this.city = city;
+    }
+
+    public RoadTile[][] getCity() {
+        return city;
     }
 }
