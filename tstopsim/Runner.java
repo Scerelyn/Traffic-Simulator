@@ -10,8 +10,8 @@ public class Runner {
         JFrame jf = new JFrame();
         jf.setBounds(20,20,800,800);
         
-        Vehicle vh = new Vehicle(40,40, Direction.WEST);
-        Vehicle vh2 = new Vehicle(100,100, Direction.NORTH);
+        //Vehicle vh = new Vehicle(40,40, Direction.WEST);
+        //Vehicle vh2 = new Vehicle(100,100, Direction.NORTH);
         
 //        StraightRoadTile srtHorz = new StraightRoadTile(0,0,Direction.WEST);
 //        StraightRoadTile srtVert = new StraightRoadTile(0,0,Direction.NORTH);
