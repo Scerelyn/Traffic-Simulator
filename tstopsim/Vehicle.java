@@ -115,12 +115,12 @@ public class Vehicle implements Visualizable {
     //0,1 1,1
     /**
      * Moves the vehicle internally, as in through the map's tile's carSpots[][]
-     *
+     * 
      * @param on The tile that this vehicle is on
      * @param next The title Adjacent to the on tile that the vehicle will move
      * to
      */
-    //this method will get huge
+    //this method is really huge
     public void internalMove(RoadTile on, RoadTile next){
         switch(dir){
             case NORTH:
@@ -309,8 +309,31 @@ public class Vehicle implements Visualizable {
                             System.out.println("Undefined behavior when traversing a t intersection");
                     }
            
-                } else {
-                    //ifs for pos
+                } else if(on instanceof FourIntersectionRoadTile){
+                    if(xTile == 1 && yTile == 1){
+                        Direction toTurn = this.getRandomTurn();
+                        if(toTurn.equals(Direction.EAST)){
+                            rotate(Direction.EAST);
+                            internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if(on.getCarSpots()[0][1] == null){
+                            on.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 1;
+                            yTile = 0;
+                        }
+                    } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightOn(Direction.SOUTH)){
+                        next.getCarSpots()[1][1] = this;
+                        on.getCarSpots()[0][1] = null;
+                        yMap--;
+                        xTile = 1;
+                        yTile = 1;
+                    } else if(xTile == 0 && yTile == 1){
+                        rotate(Direction.SOUTH);
+                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if(xTile == 0 && yTile == 0){
+                        rotate(Direction.SOUTH);
+                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    }
                 }
                 break;
             case SOUTH:
