@@ -72,4 +72,36 @@ public class Map extends JComponent {
     public RoadTile[][] getCity() {
         return city;
     }
+    
+    public RoadTile getAdjacent(int xmap, int ymap, Direction dir){
+        switch(dir){
+            case NORTH:
+                try{
+                    return city[ymap-1][xmap];
+                } catch(IndexOutOfBoundsException e) {
+                    return null;
+                }
+            case SOUTH:
+                try{
+                    return city[ymap+1][xmap];
+                } catch(IndexOutOfBoundsException e) {
+                    return null;
+                }
+            case EAST:
+                try{
+                    return city[ymap][xmap+1];
+                } catch(IndexOutOfBoundsException e) {
+                    return null;
+                }
+            case WEST:
+                try{
+                    return city[ymap][xmap-1];
+                } catch(IndexOutOfBoundsException e) {
+                    return null;
+                }
+            default:
+                System.out.println("Invalid direction " + dir + " when checking for adjacent roadtiles");
+                return null;
+        }
+    }
 }

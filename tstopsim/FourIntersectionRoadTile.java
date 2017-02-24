@@ -25,10 +25,12 @@ public class FourIntersectionRoadTile extends RoadTile{
     
     @Override
     public void setupLights(){
+        int state1 = (int)(Math.random()*6);
+        int state2 = state1+6;
         lights.clear();
-        this.lights.add( new Light(xPos+0.1*RoadTile.ROAD_DIMENTION, yPos, Direction.SOUTH,7) ); //top left
-        this.lights.add( new Light(xPos+0.9*RoadTile.ROAD_DIMENTION, yPos+0.1*RoadTile.ROAD_DIMENTION ,Direction.WEST) ); //top right
-        this.lights.add( new Light(xPos, yPos+0.6*RoadTile.ROAD_DIMENTION ,Direction.EAST) );//bottom left
-        this.lights.add( new Light(xPos+0.6*RoadTile.ROAD_DIMENTION, yPos+0.9*RoadTile.ROAD_DIMENTION, Direction.NORTH,7) );
+        this.lights.add( new Light(xPos+0.1*RoadTile.ROAD_DIMENTION, yPos, Direction.SOUTH, state2) ); //top left
+        this.lights.add( new Light(xPos+0.9*RoadTile.ROAD_DIMENTION, yPos+0.1*RoadTile.ROAD_DIMENTION ,Direction.WEST,state1) ); //top right
+        this.lights.add( new Light(xPos, yPos+0.6*RoadTile.ROAD_DIMENTION ,Direction.EAST,state1) );//bottom left
+        this.lights.add( new Light(xPos+0.6*RoadTile.ROAD_DIMENTION, yPos+0.9*RoadTile.ROAD_DIMENTION, Direction.NORTH, state2) );
     }
 }

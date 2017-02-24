@@ -82,4 +82,11 @@ public abstract class RoadTile implements Visualizable{
         }
         return null;
     }
+    
+    public boolean isSelectedLightOn(Direction dir){
+        Light l = getLightByDirection(dir);
+        return (l != null) 
+                ? l.getLightState() >= Light.GREEN_LOWER && l.getLightState() <= Light.GREEN_UPPER 
+                : true; //assume no lights is always green, since it kinda is by how people respond to no lights
+    }
 }
