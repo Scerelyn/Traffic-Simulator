@@ -1,3 +1,7 @@
+key: 
+x = finished
+~ = current goal
+
 [x] - Road tile types finished
 	[x] - Straight pieces
 	[x] - Turn pieces
@@ -5,15 +9,21 @@
 	[x] - Intersections
 	[x] - Non drivable pieces
 [] - Vehicles finished
-	[x] - Vehices can be drawn
-	[] - Vehicles have behavior
-[] - Stoplights finished
+	[x] - Vehicles can be drawn
+	[~] - Vehicles have behavior
+            [x] - Northward
+            [~] - Southward
+            [] - Eastward
+            [] - Westward
+        [] - Vehicles move
+            [] - Optional: Vehicles move fluidly
+[x] - Stoplights finished
 	[x] - Stoplights can be drawn
 	[x] - Stoplights have behavior
 		[x] - Lights cycle
 			[x] - Lights are synced between perpendicular pairs
 		[x] - Lights have random states per tile
-[x] - Map system finished
+[] - Map system finished
 	[x] - Tile placement
 	[x] - Light placement
 	[] - Car placement
@@ -21,7 +31,8 @@
 	[x] - Road tiles refreshing
 	[x] - Lights refreshing
 	[] - Cars refreshing
+
 Optional
 [] - File parsing
-	[] - Consistant syntax
+	[] - Consistent syntax
 	[x] - Help doc
