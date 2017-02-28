@@ -12,8 +12,8 @@ x = finished
 	[x] - Vehicles can be drawn
 	[~] - Vehicles have behavior
             [x] - Northward
-            [~] - Southward
-            [] - Eastward
+            [X] - Southward
+            [~] - Eastward
             [] - Westward
         [] - Vehicles move
             [] - Optional: Vehicles move fluidly
