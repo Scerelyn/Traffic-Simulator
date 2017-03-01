@@ -618,46 +618,72 @@ public class Vehicle implements Visualizable {
                     switch(on.getDir()){
                         case NORTH:
                             if(xTile == 1 && yTile == 1){
-                                
+                                rotate(Direction.EAST);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
-                                
+                                rotate(Direction.NORTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
-                                
+                                rotate(Direction.EAST);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
-                                
+                                rotate(Direction.SOUTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
+                                rotate(Direction.NORTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
+                                on.getCarSpots()[0][0] = this;
+                                on.getCarSpots()[1][0] = null;
+                                xTile = 0;
+                                yTile = 0;
                             } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
+                                rotate(Direction.SOUTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
+                                next.getCarSpots()[0][1] = this;
+                                on.getCarSpots()[0][0] = null;
+                                xTile = 1;
+                                yTile = 0;
+                                xMap--;
                             }
                             break;
                         case EAST:
                             if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
+                                rotate(Direction.EAST);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
+                                on.getCarSpots()[0][0] = this;
+                                on.getCarSpots()[0][1] = null;
+                                xTile = 0;
+                                yTile = 0;
                             } else if(xTile == 0 && yTile == 1){
-                                
+                                rotate(Direction.NORTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
-                                
+                                rotate(Direction.EAST);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case WEST:
                             if(xTile == 1 && yTile == 1){
-                                
+                                rotate(Direction.NORTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
-                                
+                                rotate(Direction.NORTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
+                                rotate(Direction.EAST);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
+                                next.getCarSpots()[0][1] = this;
+                                on.getCarSpots()[0][0] = null;
+                                xTile = 1;
+                                yTile = 0;
+                                xMap--;
                             }
                             break;
                         default:
