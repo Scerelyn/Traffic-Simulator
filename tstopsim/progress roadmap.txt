@@ -13,8 +13,8 @@ x = finished
 	[~] - Vehicles have behavior
             [x] - Northward
             [X] - Southward
-            [] - Eastward
-            [~] - Westward
+            [~] - Eastward
+            [X] - Westward
         [] - Vehicles move
             [] - Optional: Vehicles move fluidly
 [x] - Stoplights finished
