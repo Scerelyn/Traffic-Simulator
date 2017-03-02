@@ -451,7 +451,7 @@ public class Vehicle implements Visualizable {
                             }
                             break;
                         default:
-                            System.out.println("");
+                            System.out.println("Invalid direction when traveling south on a turn tile");
                     }
                 } else if(on instanceof TIntersectionRoadTile){
                     switch(on.getDir()){
@@ -542,7 +542,7 @@ public class Vehicle implements Visualizable {
                             }
                             break;
                         default:
-                            System.out.println("");
+                            System.out.println("Invalid direction when traveling south on a t intersection");
                     }
                 } else if(on instanceof FourIntersectionRoadTile){
                     if (xTile == 1 && yTile == 1) {
@@ -609,7 +609,7 @@ public class Vehicle implements Visualizable {
                             }
                             break;
                         default:
-                            System.out.println("");
+                            System.out.println("Invalid direction when traveling south on a straight road tile");
                     }
                 }
                 break;
@@ -687,7 +687,7 @@ public class Vehicle implements Visualizable {
                             }
                             break;
                         default:
-                            System.out.println("");
+                            System.out.println("Invalid direction when traveling south west on a turn tile");
                     }
                 } else if(on instanceof TIntersectionRoadTile){
                     switch(on.getDir()){
@@ -736,105 +736,74 @@ public class Vehicle implements Visualizable {
                             }
                             break;
                         default:
-                            System.out.println("");
+                            System.out.println("Invalid direction when traveling west on a t intersection");
                     }
                 } else if(on instanceof FourIntersectionRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
-                            } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
-                            }
-                            break;
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
-                            } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
-                            } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
-                            } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
-                            }
-                            break;
-                        default:
-                            System.out.println("");
+                    if (xTile == 1 && yTile == 1) {
+                        rotate(Direction.EAST);
+                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
+                        on.getCarSpots()[0][0] = this;
+                        on.getCarSpots()[0][1] = null;
+                        xTile = 0;
+                        yTile = 0;
+                    } else if (xTile == 0 && yTile == 1) {
+                        rotate(Direction.EAST);
+                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (xTile == 0 && yTile == 0) {
+                        Direction toTurn = this.getRandomTurn();
+                        if(toTurn == dir.getLeft()){
+                            rotate(Direction.SOUTH);
+                            internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if(next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
+                            next.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 1;
+                            yTile = 0;
+                            xMap--;
+                        }
                     }
                 } else if(on instanceof StraightRoadTile){
                     switch(on.getDir()){
                         case NORTH:
-                            if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
-                            } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
-                            }
-                            break;
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
-                                
+                                rotate(Direction.NORTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
-                                
+                                rotate(Direction.NORTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
-                                
+                                rotate(Direction.SOUTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
-                                
+                                rotate(Direction.SOUTH);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
-                            if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
-                            } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
-                            }
-                            break;
                         case WEST:
                             if(xTile == 1 && yTile == 1){
-                                
-                            } else if(xTile == 1 && yTile == 0){
-                                
+                                rotate(Direction.EAST);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
+                                on.getCarSpots()[0][0] = this;
+                                on.getCarSpots()[0][1] = null;
+                                xTile = 0;
+                                yTile = 0;
                             } else if(xTile == 0 && yTile == 1){
-                                
-                            } else if(xTile == 0 && yTile == 0){
-                                
+                                rotate(Direction.EAST);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
+                                next.getCarSpots()[0][1] = this;
+                                on.getCarSpots()[0][0] = null;
+                                xTile = 1;
+                                yTile = 0;
+                                xMap--;
                             }
                             break;
                         default:
-                            System.out.println("");
+                            System.out.println("Invalid direction when traveling west on a straight road tile");
                     }
                 }
                 break;
