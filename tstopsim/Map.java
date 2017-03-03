@@ -7,31 +7,10 @@ import javax.swing.JComponent;
 
 public class Map extends JComponent {
     private RoadTile[][] city;
-    private ArrayList<Visualizable> components;
+    private ArrayList<Vehicle> cars = new ArrayList<>();
     
     public Map(){
-        this.city = new RoadTile[1][1];
-    }
-    
-    public Map(int x, int y, ArrayList<Visualizable> arr){
-        this.city = new RoadTile[y][x];
-        this.components = arr;
-        components.sort((v1, v2) -> {
-            return Integer.compare(v1.getPriorityInt(), v2.getPriorityInt());
-        });
-    }
-    /**
-     * Creates a map object with a given ArrayList of Visualizable objects, then
-     * sorts the list by their priority integer
-     *
-     * @param arr The ArrayList of Visualizable-implementing objects
-     */
-    public Map(ArrayList<Visualizable> arr) {
-        this.components = arr;
-        components.sort((v1, v2) -> {
-            return Integer.compare(v1.getPriorityInt(), v2.getPriorityInt());
-        });
-        this.city = new RoadTile[1][1];
+        this.city = new RoadTile[][]{{new FourIntersectionRoadTile(0,0)}};
     }
     
     @Override
@@ -53,7 +32,12 @@ public class Map extends JComponent {
                 }
             }
         }
-        for(Visualizable v : components){
+        for(Vehicle v : cars){
+            v.internalMove( city[v.getyMap()][v.getxMap()], this.getAdjacent(v.getxMap(), v.getyMap(), v.getDir()) );
+            v.moveLocations(
+                    RoadTile.ROAD_DIMENTION*v.getxMap() + 0.1*RoadTile.ROAD_DIMENTION + v.getxTile()*0.5*RoadTile.ROAD_DIMENTION,
+                    RoadTile.ROAD_DIMENTION*v.getyMap() + 0.1*RoadTile.ROAD_DIMENTION + v.getyTile()*0.5*RoadTile.ROAD_DIMENTION
+            );
             for(ColoredRectangle2D rect : v.getParts()){
                 g2.setPaint( rect.getColor() );
                 g2.fill(rect.getRect());
@@ -103,5 +87,9 @@ public class Map extends JComponent {
                 System.out.println("Invalid direction " + dir + " when checking for adjacent roadtiles");
                 return null;
         }
+    }
+    
+    public void addVehicle(Vehicle v){
+        this.cars.add(v);
     }
 }

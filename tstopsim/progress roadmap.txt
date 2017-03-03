@@ -15,7 +15,7 @@ x = finished
             [x] - Southward
             [x] - Eastward
             [x] - Westward
-        [] - Vehicles move
+        [x] - Vehicles move
             [] - Optional: Vehicles move fluidly
 [x] - Stoplights finished
 	[x] - Stoplights can be drawn
@@ -23,14 +23,14 @@ x = finished
 		[x] - Lights cycle
 			[x] - Lights are synced between perpendicular pairs
 		[x] - Lights have random states per tile
-[] - Map system finished
+[x] - Map system finished
 	[x] - Tile placement
 	[x] - Light placement
-	[] - Car placement
-[] - Some way to refresh the map
+	[x] - Car placement
+[x] - Some way to refresh the map
 	[x] - Road tiles refreshing
 	[x] - Lights refreshing
-	[] - Cars refreshing
+	[x] - Cars refreshing
 
 Optional
 [] - File parsing

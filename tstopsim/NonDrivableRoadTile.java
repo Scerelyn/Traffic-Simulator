@@ -7,7 +7,6 @@ public class NonDrivableRoadTile extends RoadTile{
 
     public NonDrivableRoadTile(double x, double y) {
         super(x, y, Direction.NORTH);
-        this.carSpots = null;
     }
     
     @Override

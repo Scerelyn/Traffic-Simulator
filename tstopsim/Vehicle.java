@@ -10,24 +10,30 @@ public class Vehicle implements Visualizable {
     private Direction dir;
     private ArrayList<ColoredRectangle2D> parts;
     private Map m;
-    public Vehicle(){
+    private Color carColor;
+    public Vehicle(Map m){
         xPos=0;
         yPos=0;
         this.dir = Direction.NORTH;
+        this.carColor = Color.CYAN;
         this.parts = assemble();
     }
 
-    public Vehicle(double xPos, double yPos, Direction dir, Map m) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public Vehicle(int xMap, int yMap, int xTile, int yTile, Direction dir, Map m, Color c) {
+        this.xMap = xMap;
+        this.yMap = yMap;
+        this.xTile = xTile;
+        this.yTile = yTile;
         this.dir = dir;
+        this.carColor = c;
+        this.m = m;
         this.parts = assemble();
     }
     
     @Override
     public ArrayList<ColoredRectangle2D> assemble() {
         ArrayList<ColoredRectangle2D> components = new ArrayList<>();
-        ColoredRectangle2D chassis = new ColoredRectangle2D(xPos,yPos,SIDE_LENGTH,SIDE_LENGTH,Color.CYAN); 
+        ColoredRectangle2D chassis = new ColoredRectangle2D(xPos,yPos,SIDE_LENGTH,SIDE_LENGTH,carColor); 
         components.add(chassis);
         
         switch(this.dir){
@@ -81,6 +87,12 @@ public class Vehicle implements Visualizable {
         this.parts = assemble();
     }
     
+    public void moveLocations(double xPos, double yPos){
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.rebuild();
+    }
+    
     /**
      * Rotates the vehicle a direction
      *
@@ -120,8 +132,13 @@ public class Vehicle implements Visualizable {
      * @param next The title Adjacent to the on tile that the vehicle will move
      * to
      */
-    //this method is really huge
+    //this method's size is cringe worthy
     public void internalMove(RoadTile on, RoadTile next){
+        if(on == null){
+            System.out.println("on is null");
+        } if(next == null){
+            System.out.println("next is null");
+        }
         switch(dir){
             case NORTH:
                 if(on instanceof TurnRoadTile){
@@ -1054,13 +1071,13 @@ public class Vehicle implements Visualizable {
                                 yTile = 1;
                                 xMap++;
                             } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[1][1] == null){
+                                rotate(Direction.WEST);
+                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if(xTile == 0 && yTile == 1){
                                 on.getCarSpots()[1][1] = this;
                                 on.getCarSpots()[1][0] = null;
                                 xTile = 1;
                                 yTile = 1;
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
                                 internalMove(on,m.getAdjacent(xMap, yMap, dir));
@@ -1075,4 +1092,34 @@ public class Vehicle implements Visualizable {
                 System.out.println("Invalid direction " + dir + " when vehicle " + this + " moved internally");
         }
     }
+
+    public double getxPos() {
+        return xPos;
+    }
+
+    public double getyPos() {
+        return yPos;
+    }
+
+    public int getxMap() {
+        return xMap;
+    }
+
+    public int getyMap() {
+        return yMap;
+    }
+
+    public int getxTile() {
+        return xTile;
+    }
+
+    public int getyTile() {
+        return yTile;
+    }
+
+    public Direction getDir() {
+        return dir;
+    }
+    
+    
 }
