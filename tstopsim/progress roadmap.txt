@@ -10,11 +10,11 @@ x = finished
 	[x] - Non drivable pieces
 [] - Vehicles finished
 	[x] - Vehicles can be drawn
-	[~] - Vehicles have behavior
+	[x] - Vehicles have behavior
             [x] - Northward
-            [X] - Southward
-            [~] - Eastward
-            [X] - Westward
+            [x] - Southward
+            [x] - Eastward
+            [x] - Westward
         [] - Vehicles move
             [] - Optional: Vehicles move fluidly
 [x] - Stoplights finished
