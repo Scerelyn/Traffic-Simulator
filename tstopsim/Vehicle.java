@@ -674,7 +674,7 @@ public class Vehicle implements Visualizable {
                                 rotate(Direction.NORTH);
                                 //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.EAST);
+                                rotate(Direction.SOUTH);
                                 //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
