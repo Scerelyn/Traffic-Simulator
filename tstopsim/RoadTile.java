@@ -14,7 +14,7 @@ public abstract class RoadTile implements Visualizable{
     protected Direction dir;
     
     public RoadTile(double x, double y, Direction dir){
-        setBounds(x,y,dir);
+        setBounds(x*RoadTile.ROAD_DIMENTION,y*RoadTile.ROAD_DIMENTION,dir);
     }
     
     @Override
