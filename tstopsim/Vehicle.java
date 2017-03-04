@@ -132,7 +132,7 @@ public class Vehicle implements Visualizable {
      * @param next The title Adjacent to the on tile that the vehicle will move
      * to
      */
-    //this method's size is cringe worthy
+    //this method is cringe worthy
     public void internalMove(RoadTile on, RoadTile next){
         switch(dir){
             case NORTH:
@@ -793,18 +793,12 @@ public class Vehicle implements Visualizable {
                     } else if (xTile == 0 && yTile == 1) {
                         rotate(Direction.EAST);
                         //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    } else if (xTile == 0 && yTile == 0) {
-                        Direction toTurn = this.getRandomTurn();
-                        if(toTurn == dir.getLeft()){
-                            rotate(Direction.SOUTH);
-                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                        } else if(next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
-                            next.getCarSpots()[0][1] = this;
-                            on.getCarSpots()[0][0] = null;
-                            xTile = 1;
-                            yTile = 0;
-                            xMap--;
-                        }
+                    } else if (xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)) {
+                        next.getCarSpots()[0][1] = this;
+                        on.getCarSpots()[0][0] = null;
+                        xTile = 1;
+                        yTile = 0;
+                        xMap--;
                     }
                 } else if(on instanceof StraightRoadTile){
                     switch(on.getDir()){

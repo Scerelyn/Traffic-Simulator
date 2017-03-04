@@ -35,8 +35,8 @@ public class Map extends JComponent {
         for(Vehicle v : cars){
             v.internalMove( city[v.getyMap()][v.getxMap()], this.getAdjacent(v.getxMap(), v.getyMap(), v.getDir()) );
             v.moveLocations(
-                    RoadTile.ROAD_DIMENTION*v.getxMap() + 0.1*RoadTile.ROAD_DIMENTION + v.getxTile()*0.5*RoadTile.ROAD_DIMENTION,
-                    RoadTile.ROAD_DIMENTION*v.getyMap() + 0.1*RoadTile.ROAD_DIMENTION + v.getyTile()*0.5*RoadTile.ROAD_DIMENTION
+                    RoadTile.ROAD_DIMENTION*v.getxMap() + 0.15*RoadTile.ROAD_DIMENTION + v.getxTile()*0.45*RoadTile.ROAD_DIMENTION,
+                    RoadTile.ROAD_DIMENTION*v.getyMap() + 0.15*RoadTile.ROAD_DIMENTION + v.getyTile()*0.45*RoadTile.ROAD_DIMENTION
             );
             for(ColoredRectangle2D rect : v.getParts()){
                 g2.setPaint( rect.getColor() );
