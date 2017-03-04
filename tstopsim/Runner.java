@@ -26,6 +26,9 @@ public class Runner {
         mainTimer.schedule(new LightCycler(m),0,1000);
         
         m.addVehicle(new Vehicle(1,1,0,0, Direction.NORTH,m,Color.BLUE));
+        m.addVehicle(new Vehicle(1,2,0,0, Direction.NORTH,m,Color.GREEN));
+        m.addVehicle(new Vehicle(3,2,0,0, Direction.NORTH,m,Color.ORANGE));
+        m.addVehicle(new Vehicle(2,3,0,0, Direction.NORTH,m,Color.MAGENTA));
         
         jf.add(m);
         m.repaint();

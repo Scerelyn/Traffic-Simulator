@@ -134,11 +134,6 @@ public class Vehicle implements Visualizable {
      */
     //this method's size is cringe worthy
     public void internalMove(RoadTile on, RoadTile next){
-        if(on == null){
-            System.out.println("on is null");
-        } if(next == null){
-            System.out.println("next is null");
-        }
         switch(dir){
             case NORTH:
                 if(on instanceof TurnRoadTile){
@@ -146,78 +141,74 @@ public class Vehicle implements Visualizable {
                         case NORTH:
                             if(xTile == 1 && yTile == 1){ //facing the center of the road, what
                                 this.rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){ 
-                                on.getCarSpots()[0][1] = null;
                                 next.getCarSpots()[1][1] = this;
+                                on.getCarSpots()[0][1] = null;
                                 yMap--;
                                 xTile = 1;
                                 yTile = 1;
                             } else if(xTile == 0 && yTile == 0){ //wrong way
                                 rotate(dir.getOpposite());
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){ //also wrongway
                                 rotate(dir.getOpposite());
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case SOUTH:
                             if(xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null){
-                                on.getCarSpots()[1][1] = null;
                                 on.getCarSpots()[0][1] = this;
+                                on.getCarSpots()[1][1] = null;
                                 xTile = 1;
                                 yTile = 0;
                             } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){ //on the corner, so turn
                                 this.rotate(dir.getLeft());
-                                on.getCarSpots()[0][1] = null;
                                 on.getCarSpots()[0][0] = this;
+                                on.getCarSpots()[0][1] = null;
                                 xTile = 0;
                                 yTile = 0;
                             } else if(xTile == 0 && yTile == 0){ //shouldnt be here, should've been facing west
                                 this.rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){ //on the wrong lane
                                 this.rotate(dir.getOpposite());
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case WEST:
                             if(xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null){ //corner
-                                on.getCarSpots()[1][1] = null;
                                 on.getCarSpots()[0][1] = this;
+                                on.getCarSpots()[1][1] = null;
                                 xTile = 1;
                                 yTile = 0;
                             } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){ //on the edge
-                                    on.getCarSpots()[0][1] = null;
                                     next.getCarSpots()[1][1] = this;
+                                    on.getCarSpots()[0][1] = null;
                                     yMap--;
                                     xTile = 1;
                                     yTile = 1;                                
                             } else if(xTile == 0 && xTile == 0){ //wrong way
                                 rotate(dir.getOpposite());
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){ //facing incorrectly
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
                             if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.SOUTH)){
-                                rotate(dir.getRight());
-                                next.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[1][1] = null;
-                                yMap--;
-                                xTile = 0;
-                                yTile = 1;
+                                rotate(Direction.EAST);
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && xTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(dir.getOpposite());
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         default:
@@ -228,7 +219,7 @@ public class Vehicle implements Visualizable {
                         case NORTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){
                                 next.getCarSpots()[1][1] = this;
                                 on.getCarSpots()[0][1] = null;
@@ -237,42 +228,42 @@ public class Vehicle implements Visualizable {
                                 yTile = 1;
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case SOUTH:
                             if (xTile == 1 && yTile == 1) {
                                 Direction toTurn = this.getRandomTurn();
                                 if (toTurn.equals(Direction.WEST) && on.getCarSpots()[0][1] == null) {
-                                    on.getCarSpots()[1][1] = null;
                                     on.getCarSpots()[0][1] = this;
+                                    on.getCarSpots()[1][1] = null;
                                     this.yTile = 0;
                                     this.xTile = 1;
                                 } else { //east or cant turn left (westward)
                                     rotate(Direction.EAST);
-                                    internalMove(on, m.getAdjacent(xMap, yMap, dir));
+                                    //internalMove(on, m.getAdjacent(xMap, yMap, dir));
                                 }
                             } else if (xTile == 0 && yTile == 1) {
                                 rotate(Direction.EAST);
                                 Direction toTurn = this.getRandomTurn();
                                 if (toTurn.equals(this.dir.getRight())) {
                                     rotate(toTurn);
-                                    internalMove(on, m.getAdjacent(xMap, yMap, dir));
+                                    //internalMove(on, m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[1][1] == null){
-                                    on.getCarSpots()[1][0] = null;
                                     on.getCarSpots()[1][1] = this;
+                                    on.getCarSpots()[1][0] = null;
                                     xTile = 1;
                                     yTile = 1;
                                 }
                             } else if (xTile == 1 && yTile == 0) {
                                 rotate(Direction.WEST);
-                                internalMove(on, m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on, m.getAdjacent(xMap, yMap, dir));
                             } else if (xTile == 0 && yTile == 0) {
                                 rotate(Direction.WEST);
-                                internalMove(on, m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on, m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
@@ -280,10 +271,10 @@ public class Vehicle implements Visualizable {
                                 Direction toTurn = this.getRandomTurn();
                                 if(toTurn.equals(Direction.EAST)){
                                     rotate(Direction.EAST);
-                                    internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[0][1] == null){
-                                    on.getCarSpots()[1][1] = null;
                                     on.getCarSpots()[0][1] = this;
+                                    on.getCarSpots()[1][1] = null;
                                     yTile = 0;
                                     xTile = 1;
                                 }
@@ -295,30 +286,30 @@ public class Vehicle implements Visualizable {
                                 yMap--;
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case WEST:
                             if(xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null){
-                                on.getCarSpots()[1][1] = null;
                                 on.getCarSpots()[0][1] = this;
+                                on.getCarSpots()[1][1] = null;
                                 xTile = 1;
                                 yTile = 1;
                             } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){
-                                on.getCarSpots()[0][1] = null;
                                 next.getCarSpots()[1][1] = this;
+                                on.getCarSpots()[0][1] = null;
                                 yMap--;
                                 xTile = 1;
                                 yTile = 1;
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         default:
@@ -330,7 +321,7 @@ public class Vehicle implements Visualizable {
                         Direction toTurn = this.getRandomTurn();
                         if(toTurn.equals(Direction.EAST)){
                             rotate(Direction.EAST);
-                            internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(on.getCarSpots()[0][1] == null){
                             on.getCarSpots()[0][1] = this;
                             on.getCarSpots()[1][1] = null;
@@ -345,10 +336,10 @@ public class Vehicle implements Visualizable {
                         yTile = 1;
                     } else if(xTile == 0 && yTile == 1){
                         rotate(Direction.SOUTH);
-                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                     } else if(xTile == 0 && yTile == 0){
                         rotate(Direction.SOUTH);
-                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                     }
                 } else if(on instanceof StraightRoadTile){
                     switch (on.getDir()) {
@@ -367,26 +358,26 @@ public class Vehicle implements Visualizable {
                                 yTile = 1;
                             } else if (xTile == 0 && yTile == 1) {
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if (xTile == 0 && yTile == 0) {
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         default:
@@ -400,13 +391,13 @@ public class Vehicle implements Visualizable {
                         case NORTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null){
                                 on.getCarSpots()[1][0] = this;
                                 on.getCarSpots()[0][0] = null;
@@ -417,10 +408,10 @@ public class Vehicle implements Visualizable {
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
                                 next.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -429,16 +420,16 @@ public class Vehicle implements Visualizable {
                                 yMap++;
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on, m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on, m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
                                 next.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -446,8 +437,8 @@ public class Vehicle implements Visualizable {
                                 yTile = 0;
                                 xTile = 0;
                             } else if(xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null){
-                                on.getCarSpots()[0][0] = null;
                                 on.getCarSpots()[1][0] = this;
+                                on.getCarSpots()[0][0] = null;
                                 yTile = 1;
                                 xTile = 0;
                             }
@@ -455,16 +446,16 @@ public class Vehicle implements Visualizable {
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         default:
@@ -475,18 +466,18 @@ public class Vehicle implements Visualizable {
                         case NORTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,next);
+                                //internalMove(on,next);
                             } else if(xTile == 0 && yTile == 0){
                                 Direction toTurn = this.getRandomTurn();
                                 if(toTurn.equals(dir.getRight())){
                                     rotate(toTurn);
-                                    internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[1][0] == null){
                                     on.getCarSpots()[1][0] = this;
                                     on.getCarSpots()[0][0] = null;
@@ -498,10 +489,10 @@ public class Vehicle implements Visualizable {
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
                                 next.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -510,7 +501,7 @@ public class Vehicle implements Visualizable {
                                 yMap++;
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
@@ -518,13 +509,13 @@ public class Vehicle implements Visualizable {
                                 Direction toTurn = this.getRandomTurn();
                                 if(toTurn.equals(dir.getRight())){
                                     rotate(toTurn);
-                                    internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else {
                                     rotate(Direction.NORTH);
                                 }
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
                                 next.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -541,10 +532,10 @@ public class Vehicle implements Visualizable {
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
                                 next.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -564,10 +555,10 @@ public class Vehicle implements Visualizable {
                 } else if(on instanceof FourIntersectionRoadTile){
                     if (xTile == 1 && yTile == 1) {
                         rotate(Direction.NORTH);
-                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                     } else if (xTile == 1 && yTile == 0) {
                         rotate(Direction.NORTH);
-                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                     } else if (xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)) {
                         next.getCarSpots()[0][0] = this;
                         on.getCarSpots()[1][0] = null;
@@ -578,7 +569,7 @@ public class Vehicle implements Visualizable {
                         Direction toTurn = this.getRandomTurn();
                         if(toTurn.equals(dir.getRight())){
                             rotate(toTurn);
-                            internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(on.getCarSpots()[1][0] == null){
                             on.getCarSpots()[1][0] = this;
                             on.getCarSpots()[0][0] = null;
@@ -592,10 +583,10 @@ public class Vehicle implements Visualizable {
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
                                 next.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -603,8 +594,8 @@ public class Vehicle implements Visualizable {
                                 yTile = 0;
                                 yMap++;
                             } else if(xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null){
-                                on.getCarSpots()[0][0] = null;
                                 on.getCarSpots()[1][0] = this;
+                                on.getCarSpots()[0][0] = null;
                                 xTile = 0;
                                 yTile = 1;
                             }
@@ -613,16 +604,16 @@ public class Vehicle implements Visualizable {
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         default:
@@ -636,22 +627,22 @@ public class Vehicle implements Visualizable {
                         case NORTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
                                 on.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -659,7 +650,7 @@ public class Vehicle implements Visualizable {
                                 yTile = 0;
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
                                 next.getCarSpots()[0][1] = this;
                                 on.getCarSpots()[0][0] = null;
@@ -671,7 +662,7 @@ public class Vehicle implements Visualizable {
                         case EAST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
                                 on.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[0][1] = null;
@@ -679,22 +670,22 @@ public class Vehicle implements Visualizable {
                                 yTile = 0;
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
                                 next.getCarSpots()[0][1] = this;
                                 on.getCarSpots()[0][0] = null;
@@ -711,12 +702,12 @@ public class Vehicle implements Visualizable {
                         case NORTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 Direction toTurn = this.getRandomTurn();
                                 if(toTurn == dir.getRight()){
                                     rotate(toTurn);
-                                    internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[0][0] == null){
                                     on.getCarSpots()[0][0] = this;
                                     on.getCarSpots()[0][1] = null;
@@ -725,7 +716,7 @@ public class Vehicle implements Visualizable {
                                 }
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
                                 next.getCarSpots()[0][1] = this;
                                 on.getCarSpots()[0][0] = null;
@@ -737,7 +728,7 @@ public class Vehicle implements Visualizable {
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
                                 on.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[0][1] = null;
@@ -745,7 +736,7 @@ public class Vehicle implements Visualizable {
                                 yTile = 0;
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
                                 next.getCarSpots()[0][1] = this;
                                 on.getCarSpots()[0][0] = null;
@@ -757,28 +748,28 @@ public class Vehicle implements Visualizable {
                         case EAST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
                                 next.getCarSpots()[0][1] = this;
                                 on.getCarSpots()[0][0] = null;
@@ -793,7 +784,7 @@ public class Vehicle implements Visualizable {
                 } else if(on instanceof FourIntersectionRoadTile){
                     if (xTile == 1 && yTile == 1) {
                         rotate(Direction.EAST);
-                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                     } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
                         on.getCarSpots()[0][0] = this;
                         on.getCarSpots()[0][1] = null;
@@ -801,12 +792,12 @@ public class Vehicle implements Visualizable {
                         yTile = 0;
                     } else if (xTile == 0 && yTile == 1) {
                         rotate(Direction.EAST);
-                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                     } else if (xTile == 0 && yTile == 0) {
                         Direction toTurn = this.getRandomTurn();
                         if(toTurn == dir.getLeft()){
                             rotate(Direction.SOUTH);
-                            internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
                             next.getCarSpots()[0][1] = this;
                             on.getCarSpots()[0][0] = null;
@@ -821,23 +812,23 @@ public class Vehicle implements Visualizable {
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
                                 on.getCarSpots()[0][0] = this;
                                 on.getCarSpots()[0][1] = null;
@@ -845,7 +836,7 @@ public class Vehicle implements Visualizable {
                                 yTile = 0;
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.EAST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
                                 next.getCarSpots()[0][1] = this;
                                 on.getCarSpots()[0][0] = null;
@@ -865,36 +856,37 @@ public class Vehicle implements Visualizable {
                         case NORTH:
                             if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
                                 next.getCarSpots()[1][0] = this;
-                                next.getCarSpots()[1][1] = null;
+                                on.getCarSpots()[1][1] = null;
                                 xTile = 0;
                                 yTile = 1;
                                 xMap++;
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null){
+                                
                                 on.getCarSpots()[1][1] = this;
                                 on.getCarSpots()[1][0] = null;
                                 xTile = 1;
                                 yTile = 1;
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
@@ -906,22 +898,22 @@ public class Vehicle implements Visualizable {
                                 xMap++;
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null){
                                 on.getCarSpots()[1][1] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -929,7 +921,7 @@ public class Vehicle implements Visualizable {
                                 yTile = 1;
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         default:
@@ -946,7 +938,7 @@ public class Vehicle implements Visualizable {
                                 xMap++;
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null){
                                 on.getCarSpots()[1][1] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -954,7 +946,7 @@ public class Vehicle implements Visualizable {
                                 yTile = 1;
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case SOUTH:
@@ -966,12 +958,12 @@ public class Vehicle implements Visualizable {
                                 xMap++;
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 Direction toTurn = this.getRandomTurn();
                                 if(toTurn.equals(dir.getRight())){
                                     rotate(Direction.SOUTH);
-                                    internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[1][1] == null){
                                     on.getCarSpots()[1][1] = this;
                                     on.getCarSpots()[1][0] = null;
@@ -980,7 +972,7 @@ public class Vehicle implements Visualizable {
                                 }
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
@@ -992,28 +984,28 @@ public class Vehicle implements Visualizable {
                                 xMap++;
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case WEST:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         default:
@@ -1028,12 +1020,12 @@ public class Vehicle implements Visualizable {
                         xMap++;
                     } else if (xTile == 1 && yTile == 0) {
                         rotate(Direction.WEST);
-                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                     } else if (xTile == 0 && yTile == 1) {
                         Direction toTurn = this.getRandomTurn();
                         if(toTurn.equals(dir.getRight())){
                             rotate(toTurn);
-                            internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(on.getCarSpots()[1][1] == null){
                             on.getCarSpots()[1][1] = this;
                             on.getCarSpots()[1][0] = null;
@@ -1042,7 +1034,7 @@ public class Vehicle implements Visualizable {
                         }
                     } else if (xTile == 0 && yTile == 0) {
                         rotate(Direction.WEST);
-                        internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                     }
                 } else if(on instanceof StraightRoadTile){
                     switch(on.getDir()){
@@ -1050,16 +1042,16 @@ public class Vehicle implements Visualizable {
                         case SOUTH:
                             if(xTile == 1 && yTile == 1){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
                                 rotate(Direction.NORTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.SOUTH);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         case EAST:
@@ -1072,7 +1064,7 @@ public class Vehicle implements Visualizable {
                                 xMap++;
                             } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[1][1] == null){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 1){
                                 on.getCarSpots()[1][1] = this;
                                 on.getCarSpots()[1][0] = null;
@@ -1080,7 +1072,7 @@ public class Vehicle implements Visualizable {
                                 yTile = 1;
                             } else if(xTile == 0 && yTile == 0){
                                 rotate(Direction.WEST);
-                                internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             }
                             break;
                         default:
