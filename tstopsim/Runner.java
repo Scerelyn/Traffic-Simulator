@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.io.File;
 import javax.swing.*;
 import java.util.Timer;
+import tstopsim.Roads.*;
+import tstopsim.Roads.Map;
+import tstopsim.Vehicle.*;
+import tstopsim.Visual.*;
 
 public class Runner {
 
@@ -32,18 +36,18 @@ public class Runner {
         Timer mainTimer = new Timer();
         mainTimer.schedule(new LightCycler(m),0,1000);
         
-//        for(int i = 0; i < 30; i++){
-//            int yMrng = (int)(Math.random() * m.getCity().length);
-//            int xMrng = (int)(Math.random() * m.getCity()[yMrng].length);
-//            int yTrng = (int)(Math.random() * 2);
-//            int xTrng = (int)(Math.random() * 2);
-//            
-//            while(m.getCity()[yMrng][xMrng] instanceof NonDrivableRoadTile){
-//                yMrng = (int)(Math.random() * m.getCity().length);
-//                xMrng = (int)(Math.random() * m.getCity()[yMrng].length);
-//            }
-//            m.addVehicle( new Vehicle( xMrng,yMrng,xTrng,yTrng,Direction.NORTH,m,new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)) ) );
-//        }
+        for(int i = 0; i < 30; i++){
+            int yMrng = (int)(Math.random() * m.getCity().length);
+            int xMrng = (int)(Math.random() * m.getCity()[yMrng].length);
+            int yTrng = (int)(Math.random() * 2);
+            int xTrng = (int)(Math.random() * 2);
+            
+            while(m.getCity()[yMrng][xMrng] instanceof NonDrivableRoadTile){
+                yMrng = (int)(Math.random() * m.getCity().length);
+                xMrng = (int)(Math.random() * m.getCity()[yMrng].length);
+            }
+            m.addVehicle( new Vehicle( xMrng,yMrng,xTrng,yTrng,Direction.NORTH,m,new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)) ) );
+        }
         
         jf.add(m);
         m.repaint();
