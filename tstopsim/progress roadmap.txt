@@ -8,7 +8,7 @@ x = finished
 	[x] - T Intersections
 	[x] - Intersections
 	[x] - Non drivable pieces
-[] - Vehicles finished
+[x] - Vehicles finished
 	[x] - Vehicles can be drawn
 	[x] - Vehicles have behavior
             [x] - Northward
@@ -16,7 +16,7 @@ x = finished
             [x] - Eastward
             [x] - Westward
         [x] - Vehicles move
-            [] - Optional: Vehicles move fluidly
+            [~] - Optional: Vehicles move fluidly
 [x] - Stoplights finished
 	[x] - Stoplights can be drawn
 	[x] - Stoplights have behavior
@@ -33,6 +33,6 @@ x = finished
 	[x] - Cars refreshing
 
 Optional
-[] - File parsing
-	[] - Consistent syntax
+[x] - File parsing
+	[x] - Consistent syntax
 	[x] - Help doc
