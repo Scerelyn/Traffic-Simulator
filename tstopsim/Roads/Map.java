@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import javax.swing.JComponent;
-import tstopsim.Roads.*;
 import tstopsim.Visual.*;
 import tstopsim.Vehicle.*;
 
@@ -42,11 +41,6 @@ public class Map extends JComponent {
             }
         }
         for(Vehicle v : cars){
-            v.internalMove( city[v.getyMap()][v.getxMap()], this.getAdjacent(v.getxMap(), v.getyMap(), v.getDir()) );
-            v.moveLocations(
-                    RoadTile.ROAD_DIMENTION*v.getxMap() + 0.15*RoadTile.ROAD_DIMENTION + v.getxTile()*0.4*RoadTile.ROAD_DIMENTION,
-                    RoadTile.ROAD_DIMENTION*v.getyMap() + 0.15*RoadTile.ROAD_DIMENTION + v.getyTile()*0.4*RoadTile.ROAD_DIMENTION
-            );
             for(ColoredRectangle2D rect : v.getParts()){
                 g2.setPaint( rect.getColor() );
                 g2.fill(rect.getRect());
@@ -217,5 +211,9 @@ public class Map extends JComponent {
             System.out.println("Missing file");
         }
         return tCity;
+    }
+
+    public ArrayList<Vehicle> getCars() {
+        return cars;
     }
 }

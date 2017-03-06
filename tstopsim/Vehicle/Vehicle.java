@@ -7,8 +7,8 @@ import tstopsim.Visual.*;
 
 public class Vehicle implements Visualizable {
     public static final int SIDE_LENGTH = (int)(RoadTile.ROAD_DIMENTION*0.3);
-    private double xPos,yPos;
-    private int xMap,yMap,xTile,yTile; //pos is on the map for drawing (the jframe x/y), map is relative to the map (tile x/y), tile is the roadtile x/y for the tile's array (inner tile x/y)
+    private double xPos,yPos,xLastPos,yLastPos,xInterPos,yInterPos;
+    private int xMap,yMap,xTile,yTile,lastActionID; //pos is on the map for drawing (the jframe x/y), map is relative to the map (tile x/y), tile is the roadtile x/y for the tile's array (inner tile x/y)
     private Direction dir;
     private ArrayList<ColoredRectangle2D> parts;
     private Map m;
@@ -25,45 +25,51 @@ public class Vehicle implements Visualizable {
         this.carColor = c;
         this.m = m;
         this.parts = assemble();
+        this.xPos = RoadTile.ROAD_DIMENTION*xMap + 0.15*RoadTile.ROAD_DIMENTION + xTile*0.4*RoadTile.ROAD_DIMENTION;
+        this.yPos = RoadTile.ROAD_DIMENTION*yMap + 0.15*RoadTile.ROAD_DIMENTION + yTile*0.4*RoadTile.ROAD_DIMENTION;
+        this.xLastPos = xPos;
+        this.yLastPos = yPos;
+        this.xInterPos = xPos;
+        this.yInterPos = yPos;
     }
     
     @Override
     public ArrayList<ColoredRectangle2D> assemble() {
         ArrayList<ColoredRectangle2D> components = new ArrayList<>();
-        ColoredRectangle2D chassis = new ColoredRectangle2D(xPos,yPos,SIDE_LENGTH,SIDE_LENGTH,carColor); 
+        ColoredRectangle2D chassis = new ColoredRectangle2D(xInterPos,yInterPos,SIDE_LENGTH,SIDE_LENGTH,carColor); 
         components.add(chassis);
         
         switch(this.dir){
             case NORTH:
-                components.add(new ColoredRectangle2D(xPos, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); // top right
-                components.add(new ColoredRectangle2D(xPos, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); // top right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom right
                 break;
             case EAST:
-                components.add(new ColoredRectangle2D(xPos, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //top left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); // top right
-                components.add(new ColoredRectangle2D(xPos, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //top left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); // top right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom right
                 break;
             case WEST:
-                components.add(new ColoredRectangle2D(xPos, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); // top right
-                components.add(new ColoredRectangle2D(xPos, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); // top right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom right
                 break;
             case SOUTH:
-                components.add(new ColoredRectangle2D(xPos, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //top left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); // top right
-                components.add(new ColoredRectangle2D(xPos, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //top left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); // top right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom right
                 break;
             default:
                 System.out.println("Invalid direction when assembling car " + this);
-                components.add(new ColoredRectangle2D(xPos, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); // top right
-                components.add(new ColoredRectangle2D(xPos, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.GREEN)); //bottom left
-                components.add(new ColoredRectangle2D(xPos + 0.8*SIDE_LENGTH, yPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.MAGENTA)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); // top right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.GREEN)); //bottom left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.MAGENTA)); //bottom right
         }
         
         return components;
@@ -128,10 +134,15 @@ public class Vehicle implements Visualizable {
      * @param on The tile that this vehicle is on
      * @param next The title Adjacent to the on tile that the vehicle will move
      * to
+     * @return Returns a 0 if the vehicle moved places, returns 1 if a turn was made
      */
     //this method is cringe worthy
-    public void internalMove(RoadTile on, RoadTile next){
-        doingATurn = this.doATurn();
+    public int internalMove(RoadTile on, RoadTile next){
+        xLastPos = xPos;
+        yLastPos = yPos;
+        xInterPos = xLastPos;
+        yInterPos = yLastPos;
+        Direction preRotate = dir;
         if(turnCooldown > 0){
             doingATurn = false;
             turnCooldown--;
@@ -199,7 +210,7 @@ public class Vehicle implements Visualizable {
                             }
                             break;
                         case EAST:
-                            if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.SOUTH)){
+                            if(xTile == 1 && yTile == 1){
                                 rotate(Direction.EAST);
                                 //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 1 && yTile == 0){
@@ -1088,9 +1099,15 @@ public class Vehicle implements Visualizable {
             default:
                 System.out.println("Invalid direction " + dir + " when vehicle " + this + " moved internally");
         }
-        if(doingATurn){
-            turnCooldown = 2;
+        if(doingATurn && preRotate != dir){
+            this.lastActionID = 1;
+        } else {
+            this.lastActionID = 0;
         }
+        this.xPos = RoadTile.ROAD_DIMENTION*xMap + 0.15*RoadTile.ROAD_DIMENTION + xTile*0.4*RoadTile.ROAD_DIMENTION;
+        this.yPos = RoadTile.ROAD_DIMENTION*yMap + 0.15*RoadTile.ROAD_DIMENTION + yTile*0.4*RoadTile.ROAD_DIMENTION;
+        System.out.println("\nxPos " + xPos + "(" + xLastPos +") | yPos " + yPos + "(" + yLastPos);
+        return lastActionID;
     }
 
     public double getxPos() {
@@ -1120,6 +1137,32 @@ public class Vehicle implements Visualizable {
     public Direction getDir() {
         return dir;
     }
+
+    public double getxLastPos() {
+        return xLastPos;
+    }
+
+    public double getyLastPos() {
+        return yLastPos;
+    }
     
+    public int getLastActionID() {
+        return lastActionID;
+    }
+
+    public double getxInterPos() {
+        return xInterPos;
+    }
+
+    public double getyInterPos() {
+        return yInterPos;
+    }
     
+    public void increInterxPos(double incre){
+        this.xInterPos += incre;
+    }
+    
+    public void increInteryPos(double incre){
+        this.yInterPos += incre;
+    }
 }

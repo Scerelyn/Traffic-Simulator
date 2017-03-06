@@ -37,6 +37,10 @@ public class Runner {
             m.addVehicle( new Vehicle( xMrng,yMrng,xTrng,yTrng,Direction.NORTH,m,new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)) ) );
         }
         
+        m.addVehicle(new Vehicle(1,1,0,0,Direction.NORTH,m,Color.CYAN));
+        mainTimer.schedule(new VehicleMover(m.getCars(),0.016),0,10);
+        mainTimer.schedule(new Repainter(m),0,10);
+        mainTimer.schedule(new InternalVehicleMove(m),0,1000);
         jf.add(m);
         m.repaint();
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

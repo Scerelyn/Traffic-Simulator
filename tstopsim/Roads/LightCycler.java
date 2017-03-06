@@ -20,7 +20,6 @@ public class LightCycler extends TimerTask{
         for(Light l : lights){
             l.changeLightState();
         }
-        m.repaint();
     }
 
     public ArrayList<Light> getLights() {

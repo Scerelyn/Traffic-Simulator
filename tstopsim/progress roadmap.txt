@@ -16,7 +16,7 @@ x = finished
             [x] - Eastward
             [x] - Westward
         [x] - Vehicles move
-            [~] - Optional: Vehicles move fluidly
+            [x] - Optional: Vehicles move fluidly
 [x] - Stoplights finished
 	[x] - Stoplights can be drawn
 	[x] - Stoplights have behavior
