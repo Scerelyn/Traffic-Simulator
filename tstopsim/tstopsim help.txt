@@ -1,0 +1,12 @@
+File setup:
+
+b - nondrivable, think buildings
+i - intersection
+f* - straight piece, ex: fn gives a straight piece going north, which happens to be identical to fs,
+t* - turn piece, tn gives north>east, te gives east>south, ts gives south>west, tw gives west>north
+h* - gives a three way piece, where direction refers to the direction of the third road, so hs gives a T shape
+
+* - refers to a cardinal direction
+
+Spaces are ignored, invalid characters are treated as nondrivable roadtiles
+It is recommended to surround your map with nondrivable roadtiles so it looks neaters, but not needed
