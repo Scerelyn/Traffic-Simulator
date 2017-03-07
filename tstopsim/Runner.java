@@ -19,7 +19,7 @@ public class Runner {
         //String workingDir = System.getProperty("user.dir");
 	//System.out.println("Current working directory : " + workingDir);
         
-        Map m = new Map(new File("src\\tstopsim\\data2.txt"));
+        Map m = new Map(new File("src\\tstopsim\\data3.txt"));
 
         Timer mainTimer = new Timer();
         mainTimer.schedule(new LightCycler(m),0,1000);
@@ -37,7 +37,7 @@ public class Runner {
             m.addVehicle( new Vehicle( xMrng,yMrng,xTrng,yTrng,Direction.NORTH,m,new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)) ) );
         }
         
-        m.addVehicle(new Vehicle(1,1,0,0,Direction.NORTH,m,Color.CYAN));
+        //m.addVehicle(new Vehicle(1,1,0,0,Direction.NORTH,m,Color.CYAN));
         mainTimer.schedule(new VehicleMover(m.getCars(),0.016),0,10);
         mainTimer.schedule(new Repainter(m),0,10);
         mainTimer.schedule(new InternalVehicleMove(m),0,1000);

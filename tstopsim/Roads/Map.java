@@ -32,18 +32,23 @@ public class Map extends JComponent {
                     g2.setPaint(tile.getParts().get(part).getColor() );
                     g2.fill( pieceRect );
                 }
-                for(Light l : tile.getLights()){
-                    for(ColoredRectangle2D part : l.getParts()){
-                        g2.setPaint(part.getColor());
-                        g2.fill(part.getRect());
-                    }
-                }
+                
             }
         }
         for(Vehicle v : cars){
             for(ColoredRectangle2D rect : v.getParts()){
                 g2.setPaint( rect.getColor() );
                 g2.fill(rect.getRect());
+            }
+        }
+        for(RoadTile[] tileArr : this.city){
+            for(RoadTile tile : tileArr){
+                for(Light l : tile.getLights()){
+                    for(ColoredRectangle2D part : l.getParts()){
+                        g2.setPaint(part.getColor());
+                        g2.fill(part.getRect());
+                    }
+                }
             }
         }
     }

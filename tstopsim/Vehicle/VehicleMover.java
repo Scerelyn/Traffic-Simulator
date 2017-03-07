@@ -14,7 +14,6 @@ public class VehicleMover extends TimerTask{
     @Override
     public void run() {
         for(Vehicle v : cars){
-            System.out.println("xinter " + v.getxInterPos() + " yinter " + v.getyInterPos());
             if(v.getLastActionID() == 0){
                 switch (v.getDir()) {
                     case NORTH:

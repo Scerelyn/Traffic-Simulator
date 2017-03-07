@@ -12,7 +12,7 @@ public class Vehicle implements Visualizable {
     private Direction dir;
     private ArrayList<ColoredRectangle2D> parts;
     private Map m;
-    private Color carColor;
+    private Color carColor,brakeLightColor = Color.RED;
     private boolean doingATurn = false;
     private int turnCooldown = 0;
 
@@ -43,24 +43,24 @@ public class Vehicle implements Visualizable {
             case NORTH:
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); // top right
-                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom left
-                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //bottom left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //bottom right
                 break;
             case EAST:
-                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //top left
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //top left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); // top right
-                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom left
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //bottom left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom right
                 break;
             case WEST:
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
-                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); // top right
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); // top right
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom left
-                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //bottom right
                 break;
             case SOUTH:
-                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); //top left
-                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.RED)); // top right
+                components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //top left
+                components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); // top right
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom right
                 break;
@@ -143,6 +143,8 @@ public class Vehicle implements Visualizable {
         xInterPos = xLastPos;
         yInterPos = yLastPos;
         Direction preRotate = dir;
+        boolean didATurn = false;
+        doingATurn = this.doATurn();
         if(turnCooldown > 0){
             doingATurn = false;
             turnCooldown--;
@@ -251,6 +253,8 @@ public class Vehicle implements Visualizable {
                             if (xTile == 1 && yTile == 1) {
                                 if (doingATurn) {
                                     rotate(dir.getRight());
+                                    didATurn = true;
+                                    doingATurn = false;
                                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[0][1] == null){ //east or cant turn left (westward)
                                     on.getCarSpots()[0][1] = this;
@@ -273,6 +277,8 @@ public class Vehicle implements Visualizable {
                             if(xTile == 1 && yTile == 1){
                                 if(doingATurn){
                                     rotate(dir.getRight());
+                                    didATurn = true;
+                                    doingATurn = false;
                                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[0][1] == null){
                                     on.getCarSpots()[0][1] = this;
@@ -322,6 +328,8 @@ public class Vehicle implements Visualizable {
                     if(xTile == 1 && yTile == 1){
                         if(doingATurn){
                             rotate(dir.getRight());
+                            didATurn = true;
+                            doingATurn = false;
                             //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(on.getCarSpots()[0][1] == null){
                             on.getCarSpots()[0][1] = this;
@@ -332,6 +340,8 @@ public class Vehicle implements Visualizable {
                     } else if(xTile == 1 && yTile == 0){
                         if(doingATurn){
                             rotate(dir.getLeft());
+                            didATurn = true;
+                            doingATurn = false;
                             //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){
                             next.getCarSpots()[1][1] = this;
@@ -483,6 +493,8 @@ public class Vehicle implements Visualizable {
                             } else if(xTile == 0 && yTile == 0){
                                 if(doingATurn){
                                     rotate(dir.getRight());
+                                    didATurn = true;
+                                    doingATurn = false;
                                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[1][0] == null){
                                     on.getCarSpots()[1][0] = this;
@@ -514,6 +526,8 @@ public class Vehicle implements Visualizable {
                             if(xTile == 1 && yTile == 1){
                                 if(doingATurn){
                                     rotate(dir.getRight());
+                                    didATurn = true;
+                                    doingATurn = false;
                                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else {
                                     rotate(Direction.NORTH);
@@ -550,6 +564,8 @@ public class Vehicle implements Visualizable {
                             } else if(xTile == 0 && yTile == 0){
                                 if(doingATurn){
                                     rotate(dir.getRight());
+                                    didATurn = true;
+                                    doingATurn = false;
                                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 }
                                 else if(on.getCarSpots()[1][0] == null){
@@ -573,6 +589,8 @@ public class Vehicle implements Visualizable {
                     } else if (xTile == 0 && yTile == 1) {
                         if(doingATurn){
                             rotate(dir.getLeft());
+                            didATurn = true;
+                            doingATurn = false;
                             //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
                             next.getCarSpots()[0][0] = this;
@@ -584,6 +602,8 @@ public class Vehicle implements Visualizable {
                     } else if (xTile == 0 && yTile == 0) {
                         if(doingATurn){
                             rotate(dir.getRight());
+                            didATurn = true;
+                            doingATurn = false;
                             //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(on.getCarSpots()[1][0] == null){
                             on.getCarSpots()[1][0] = this;
@@ -721,6 +741,8 @@ public class Vehicle implements Visualizable {
                             } else if(xTile == 1 && yTile == 0){
                                 if(doingATurn){
                                     rotate(dir.getRight());
+                                    didATurn = true;
+                                    doingATurn = false;
                                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[0][0] == null){
                                     on.getCarSpots()[0][0] = this;
@@ -810,6 +832,8 @@ public class Vehicle implements Visualizable {
                     } else if (xTile == 0 && yTile == 0) {
                         if(doingATurn){
                             rotate(dir.getLeft());
+                            didATurn = true;
+                            doingATurn = false;
                             //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
                             next.getCarSpots()[0][1] = this;
@@ -975,6 +999,8 @@ public class Vehicle implements Visualizable {
                             } else if(xTile == 0 && yTile == 1){
                                 if(doingATurn){
                                     rotate(dir.getRight());
+                                    didATurn = true;
+                                    doingATurn = false;
                                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                                 } else if(on.getCarSpots()[1][1] == null){
                                     on.getCarSpots()[1][1] = this;
@@ -1027,6 +1053,8 @@ public class Vehicle implements Visualizable {
                     if (xTile == 1 && yTile == 1) {
                         if(doingATurn){
                             rotate(dir.getLeft());
+                            didATurn = true;
+                            doingATurn = false;
                             //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
                             next.getCarSpots()[1][0] = this;
@@ -1041,6 +1069,8 @@ public class Vehicle implements Visualizable {
                     } else if (xTile == 0 && yTile == 1) {
                         if(doingATurn){
                             rotate(dir.getRight());
+                            didATurn = true;
+                            doingATurn = false;
                             //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                         } else if(on.getCarSpots()[1][1] == null){
                             on.getCarSpots()[1][1] = this;
@@ -1099,14 +1129,19 @@ public class Vehicle implements Visualizable {
             default:
                 System.out.println("Invalid direction " + dir + " when vehicle " + this + " moved internally");
         }
-        if(doingATurn && preRotate != dir){
+        if(didATurn && preRotate != dir){
             this.lastActionID = 1;
+            turnCooldown = 2;
         } else {
             this.lastActionID = 0;
         }
         this.xPos = RoadTile.ROAD_DIMENTION*xMap + 0.15*RoadTile.ROAD_DIMENTION + xTile*0.4*RoadTile.ROAD_DIMENTION;
         this.yPos = RoadTile.ROAD_DIMENTION*yMap + 0.15*RoadTile.ROAD_DIMENTION + yTile*0.4*RoadTile.ROAD_DIMENTION;
-        System.out.println("\nxPos " + xPos + "(" + xLastPos +") | yPos " + yPos + "(" + yLastPos);
+        if(this.xPos != this.xLastPos || this.yPos != this.yLastPos){
+            this.brakeLightColor = Color.RED.darker().darker();
+        } else {
+            this.brakeLightColor = Color.RED;
+        }
         return lastActionID;
     }
 
