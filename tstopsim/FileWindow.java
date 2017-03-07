@@ -46,7 +46,9 @@ public class FileWindow extends JFrame{
                         m.loadNewCity(file);
                         lc.reloadLights(m);
                         userText.setText("Map loaded");
-                        mainWindow.setBounds(0, 0, m.getCity()[0].length*RoadTile.ROAD_DIMENTION+20, m.getCity().length*RoadTile.ROAD_DIMENTION+60);
+                        if(m.getCity().length >= 1){
+                            mainWindow.setBounds(0, 0, m.getCity()[0].length*RoadTile.ROAD_DIMENTION+20, m.getCity().length*RoadTile.ROAD_DIMENTION+60);
+                        }
                         this.setBounds(mainWindow.getX() + mainWindow.getWidth(), 0, 0, 0);
                         this.pack();
                     } else {
@@ -62,8 +64,8 @@ public class FileWindow extends JFrame{
         this.getContentPane().add(loadInCars);
         loadInCars.setFont(use);
         loadInCars.addActionListener(ev ->{
-            if(m.getCity().length == 1 && m.getCity()[0].length == 1){
-                userText.setText("LOAD IN A FULL MAP FIRST");
+            if(m.getCity().length < 3){
+                userText.setText("LOAD IN A FULL MAP FIRST, MIN SIZE IS 3x3");
                 this.pack();
             } else {
                 m.loadInCars(10);

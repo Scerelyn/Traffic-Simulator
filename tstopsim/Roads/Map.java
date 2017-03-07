@@ -257,7 +257,11 @@ public class Map extends JComponent {
                 yMrng = (int)(Math.random() * this.getCity().length);
                 xMrng = (int)(Math.random() * this.getCity()[yMrng].length);
             }
-            this.addVehicle( new Vehicle( xMrng,yMrng,xTrng,yTrng,Direction.NORTH,this,new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)) ) );
+            if(this.city[yMrng][xMrng].getCarSpots()[yTrng][xTrng] == null){
+                Vehicle v = new Vehicle( xMrng,yMrng,xTrng,yTrng,Direction.NORTH,this,new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)) );
+                this.city[yMrng][xMrng].getCarSpots()[yTrng][xTrng] = v;
+                this.addVehicle( v );
+            }
         }
     }
     
