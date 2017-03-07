@@ -8,7 +8,11 @@ import tstopsim.Vehicle.*;
 
 public abstract class RoadTile implements Visualizable{
     //road 80%, sidewalk 20%. sidewalk 10% road 80% sidewalk 10%
-    public static final int ROAD_DIMENTION = 100; //pixels side, length and width of the tile. This is the only given constant, so everything else scales
+    
+    /*
+    The length and width of the RoadTile and all inheriting Tiles. All objects related to RoadTiles are based off of this dimention
+    */
+    public static final int ROAD_DIMENTION = 100;
     
     protected ArrayList<ColoredRectangle2D> parts;
     protected Vehicle[][] carSpots = new Vehicle[2][2]; //{ north{west, east}, south{west, east}}
@@ -77,6 +81,11 @@ public abstract class RoadTile implements Visualizable{
         return dir;
     }
     
+    /**
+     * Returns a Light object facing the given direction
+     * @param nDir The direction to look for
+     * @return A Light object facing in nDir direction, or null if no light is found
+     */
     public Light getLightByDirection(Direction nDir){
         for(Light l : this.lights){
             if(l.getDir() == nDir){
@@ -86,6 +95,11 @@ public abstract class RoadTile implements Visualizable{
         return null;
     }
     
+    /**
+     * Checks to see if the selected light is green or "green", as in, it is legal for a car to drive past
+     * @param dir The direction of the light to look for
+     * @return True if the light's state is green or if no light is present
+     */
     public boolean isSelectedLightGreen(Direction dir){
         Light l = getLightByDirection(dir);
         return (l != null) 

@@ -65,6 +65,15 @@ public class Map extends JComponent {
         return city;
     }
     
+    /**
+     * Returns an adjacent roadtile on the city roadtile matrix
+     *
+     * @param xmap The roadtile's x position on the matrix
+     * @param ymap The roadtile's y position on the matrix
+     * @param dir The direction to check for adjacency
+     * @return An adjacent roadtile object. This method returns null if no tile
+     * is found
+     */
     public RoadTile getAdjacent(int xmap, int ymap, Direction dir){
         switch(dir){
             case NORTH:
@@ -101,6 +110,11 @@ public class Map extends JComponent {
         this.cars.add(v);
     }
     
+    /**
+     * Parses a file from text into data that this map can use as a roadtile matrix
+     * @param f The file to parse
+     * @return A roadtile matrix resulting from the file parsing
+     */
     public RoadTile[][] parseFile(File f){
         ArrayList<RoadTile> tempRow = new ArrayList<>();
         RoadTile[][] tCity;
@@ -217,7 +231,52 @@ public class Map extends JComponent {
         }
         return tCity;
     }
-
+    
+    /**
+     * Loads a new city roadtile matrix from a file
+     * @param f 
+     */
+    public void loadNewCity(File f){
+        this.wipeCars();
+        this.city = this.parseFile(f);
+    }
+    
+    /**
+     * Loads in cars into random spots in the city roadtile matrix
+     *
+     * @param carAmount The amount of cars to add
+     */
+    public void loadInCars(int carAmount){
+        for(int i = 0; i < carAmount; i++){
+            int yMrng = (int)(Math.random() * this.getCity().length);
+            int xMrng = (int)(Math.random() * this.getCity()[yMrng].length);
+            int yTrng = (int)(Math.random() * 2);
+            int xTrng = (int)(Math.random() * 2);
+            
+            while(this.getCity()[yMrng][xMrng] instanceof NonDrivableRoadTile){
+                yMrng = (int)(Math.random() * this.getCity().length);
+                xMrng = (int)(Math.random() * this.getCity()[yMrng].length);
+            }
+            this.addVehicle( new Vehicle( xMrng,yMrng,xTrng,yTrng,Direction.NORTH,this,new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)) ) );
+        }
+    }
+    
+    /**
+     * Wipes out all vehicle objects in the cars arraylist and those in  carspots of each tile
+     */
+    public void wipeCars(){ //not using for each loops since those make a copy, i dont want that, i want to replace
+        this.cars.clear();
+        for(int y = 0; y < city.length; y++){
+            for(int x = 0; x < city[y].length; x++){
+                for(int i = 0; i < city[y][x].getCarSpots().length; i++){
+                    for(int j = 0; j < city[y][x].getCarSpots()[i].length; j++){
+                        city[y][x].carSpots[i][j] = null;
+                    }
+                }
+            }
+        }
+    }
+    
     public ArrayList<Vehicle> getCars() {
         return cars;
     }

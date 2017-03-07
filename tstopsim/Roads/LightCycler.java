@@ -27,4 +27,17 @@ public class LightCycler extends TimerTask{
     }
     
     
+    /**
+     * Refills the lights arraylist with new light objects. This is called whenever Map m changes
+     * @param newMap The new map to load lights from
+     */
+    public void reloadLights(Map newMap){
+        this.m = newMap;
+        this.lights.clear();
+        for(RoadTile[] rtArr : m.getCity()){
+            for(RoadTile rt : rtArr){
+                lights.addAll(rt.getLights());
+            }
+        }
+    }
 }

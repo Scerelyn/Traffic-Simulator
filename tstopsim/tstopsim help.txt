@@ -10,3 +10,4 @@ h* - gives a three way piece, where direction refers to the direction of the thi
 
 Spaces are ignored, invalid characters are treated as nondrivable roadtiles
 It is recommended to surround your map with nondrivable roadtiles so it looks neaters, but not needed
+Minimum map size is 3x3

@@ -137,6 +137,7 @@ public class Vehicle implements Visualizable {
      * @return Returns a 0 if the vehicle moved places, returns 1 if a turn was made
      */
     //this method is cringe worthy
+    //TODO split this method up based on RoadTile's types
     public int internalMove(RoadTile on, RoadTile next){
         xLastPos = xPos;
         yLastPos = yPos;
