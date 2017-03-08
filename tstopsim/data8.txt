@@ -1,0 +1,12 @@
+b   b   b   b   b   b   b   b   b   b   b   b   b   b
+b   te  fe  hs  fe  ts  b   b   b   te  fe  ts  b   b
+b   fs  b   fs  b   he  fe  fe  fe  i   ts  fs  b   b
+b   fs  b   fs  b   fs  b   b   b   fs  fs  tn  ts  b
+b   tn  fe  hw  b   tn  hs  fe  fe  hw  fs  b   fs  b
+b   b   b   fs  b   b   fs  te  fe  tw  fs  b   fs  b
+b   te  fe  i   fe  fe  tw  fs  b   b   fs  b   fs  b
+b   fs  b   fs  b   b   b   fs  b   b   fs  b   fs  b
+b   tn  fe  i   fe  fe  fe  i   fe  fe  tw  b   fs  b
+b   b   b   fs  b   b   b   fs  b   b   b   b   fs  b
+b   b   b   tn  fe  fe  fe  hn  fe  fe  fe  fe  tw  b
+b   b   b   b   b   b   b   b   b   b   b   b   b   b

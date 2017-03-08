@@ -1,7 +1,4 @@
 package tstopsim;
-
-import java.awt.Font;
-import java.io.File;
 import javax.swing.*;
 import java.util.Timer;
 import tstopsim.Roads.*;
@@ -20,7 +17,7 @@ public class Runner {
         mainTimer.schedule(lc,0,1000);
         
         //m.addVehicle(new Vehicle(1,1,0,0,Direction.NORTH,m,Color.CYAN));
-        mainTimer.schedule(new VehicleMover(m.getCars(),0.016),0,10);
+        mainTimer.schedule(new VehicleMover(m.getCars(),0.016),0,10); //if cars move too much, change the 10's to 16's. no idea why different systems have different speeds, could be a Timer thing
         mainTimer.schedule(new Repainter(m),0,10);
         mainTimer.schedule(new InternalVehicleMove(m),0,1000);
         jf.add(m);

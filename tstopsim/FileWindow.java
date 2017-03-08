@@ -43,6 +43,7 @@ public class FileWindow extends JFrame{
                     File file = fc.getSelectedFile();
                     //This is where a real application would open the file.
                     if(file.getName().endsWith(".txt") || file.getName().endsWith(".traffic")){
+                        m.setCurrentMap(file);
                         m.loadNewCity(file);
                         lc.reloadLights(m);
                         userText.setText("Map loaded");
@@ -57,6 +58,27 @@ public class FileWindow extends JFrame{
                 } else {
                     //cancel button was pressed, so do nothing
                 }
+            }
+        });
+        
+        JButton reloadMap = new JButton("Reload current map");
+        this.getContentPane().add(reloadMap);
+        reloadMap.setFont(use);
+        reloadMap.addActionListener(ev -> {
+            if(m.getCurrentMap() != null){
+                m.wipeCars();
+                m.loadNewCity(m.getCurrentMap());
+                lc.reloadLights(m);
+                userText.setText("Map loaded");
+                if (m.getCity().length >= 1) {
+                    mainWindow.setBounds(0, 0, m.getCity()[0].length * RoadTile.ROAD_DIMENTION + 20, m.getCity().length * RoadTile.ROAD_DIMENTION + 60);
+                }
+                this.setBounds(mainWindow.getX() + mainWindow.getWidth(), 0, 0, 0);
+                this.pack();
+                userText.setText("Map reloaded");
+            } else {
+                userText.setText("No map currently loaded in");
+                this.pack();
             }
         });
         

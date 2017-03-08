@@ -12,6 +12,7 @@ import tstopsim.Vehicle.*;
 public class Map extends JComponent {
     private RoadTile[][] city;
     private ArrayList<Vehicle> cars = new ArrayList<>();
+    private File currentMap = null;
     
     public Map(){
         this.city = new RoadTile[][]{{new FourIntersectionRoadTile(0,0)}};
@@ -283,5 +284,13 @@ public class Map extends JComponent {
     
     public ArrayList<Vehicle> getCars() {
         return cars;
+    }
+
+    public File getCurrentMap() {
+        return currentMap;
+    }
+
+    public void setCurrentMap(File currentMap) {
+        this.currentMap = currentMap;
     }
 }
