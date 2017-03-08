@@ -1,5 +1,6 @@
 package tstopsim.Roads;
 
+import java.awt.Color;
 import java.util.*;
 import tstopsim.Visual.*;
 import tstopsim.Vehicle.*;
@@ -19,6 +20,8 @@ public abstract class RoadTile implements Visualizable{
     protected ArrayList<Light> lights = new ArrayList<>();
     protected double xPos,yPos;
     protected Direction dir;
+    protected final static Color SIDE_WALK_COLOR = Color.LIGHT_GRAY;
+    protected final static Color ROAD_COLOR = Color.LIGHT_GRAY.darker();
     
     public RoadTile(double x, double y, Direction dir){
         setBounds(x*RoadTile.ROAD_DIMENTION,y*RoadTile.ROAD_DIMENTION,dir);

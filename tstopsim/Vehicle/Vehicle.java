@@ -45,24 +45,40 @@ public class Vehicle implements Visualizable {
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); // top right
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //bottom left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos + 0.2*SIDE_LENGTH, yInterPos + 0.2*SIDE_LENGTH, 0.6*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.CYAN)); //window
+                
+                components.add(new ColoredRectangle2D(xInterPos + 0.45*SIDE_LENGTH, yInterPos + -0.2*SIDE_LENGTH, 0.1*SIDE_LENGTH, 0.7*SIDE_LENGTH,Color.BLACK)); //direction pointer
+                
                 break;
             case EAST:
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //top left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); // top right
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //bottom left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos + 0.6*SIDE_LENGTH, yInterPos + 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.6*SIDE_LENGTH,Color.CYAN)); //window
+                
+                components.add(new ColoredRectangle2D(xInterPos + 0.5*SIDE_LENGTH, yInterPos + 0.45*SIDE_LENGTH, 0.7*SIDE_LENGTH, 0.1*SIDE_LENGTH,Color.BLACK)); //direction pointer
+                
                 break;
             case WEST:
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //top left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); // top right
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos + 0.2*SIDE_LENGTH, yInterPos + 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.6*SIDE_LENGTH,Color.CYAN)); //window
+                
+                components.add(new ColoredRectangle2D(xInterPos + -0.2*SIDE_LENGTH, yInterPos + 0.45*SIDE_LENGTH, 0.7*SIDE_LENGTH, 0.1*SIDE_LENGTH,Color.BLACK)); //direction pointer
+                
                 break;
             case SOUTH:
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); //top left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,this.brakeLightColor)); // top right
                 components.add(new ColoredRectangle2D(xInterPos, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom left
                 components.add(new ColoredRectangle2D(xInterPos + 0.8*SIDE_LENGTH, yInterPos + 0.8*SIDE_LENGTH, 0.2*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.WHITE)); //bottom right
+                components.add(new ColoredRectangle2D(xInterPos + 0.2*SIDE_LENGTH, yInterPos + 0.6*SIDE_LENGTH, 0.6*SIDE_LENGTH, 0.2*SIDE_LENGTH,Color.CYAN)); //window
+                
+                components.add(new ColoredRectangle2D(xInterPos + 0.45*SIDE_LENGTH, yInterPos + 0.5*SIDE_LENGTH, 0.1*SIDE_LENGTH, 0.7*SIDE_LENGTH,Color.BLACK)); //direction pointer
+                
                 break;
             default:
                 System.out.println("Invalid direction when assembling car " + this);

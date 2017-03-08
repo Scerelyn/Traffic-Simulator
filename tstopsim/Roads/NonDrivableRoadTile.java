@@ -1,6 +1,5 @@
 package tstopsim.Roads;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import tstopsim.Visual.*;
 
@@ -13,7 +12,7 @@ public class NonDrivableRoadTile extends RoadTile{
     @Override
     public ArrayList<ColoredRectangle2D> assemble() {
         ArrayList<ColoredRectangle2D> components = new ArrayList<>();
-        components.add( new ColoredRectangle2D(xPos,yPos,RoadTile.ROAD_DIMENTION,RoadTile.ROAD_DIMENTION,Color.LIGHT_GRAY) );
+        components.add( new ColoredRectangle2D(xPos,yPos,RoadTile.ROAD_DIMENTION,RoadTile.ROAD_DIMENTION,SIDE_WALK_COLOR) );
         return components;
     }
 
