@@ -51,28 +51,28 @@ public class Light implements Visualizable{
             //(lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker()
             //(lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker()
             case SOUTH:
-                box = new ColoredRectangle2D(xPos,yPos,0.3*RoadTile.ROAD_DIMENTION,0.1*RoadTile.ROAD_DIMENTION,Color.BLACK);
-                green = new ColoredRectangle2D( 0.1*box.getRect().getWidth()+xPos,  yPos+box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= GREEN_LOWER && lightState <= GREEN_UPPER) ? Color.GREEN : Color.GREEN.darker().darker());
-                yellow = new ColoredRectangle2D(0.4*box.getRect().getWidth()+xPos,  yPos+box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker());
-                red = new ColoredRectangle2D(   0.7*box.getRect().getWidth()+xPos,  yPos+box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker());
+                box = new ColoredRectangle2D(xPos,yPos,0.4*RoadTile.ROAD_DIMENTION,0.15*RoadTile.ROAD_DIMENTION,Color.BLACK);
+                green = new ColoredRectangle2D( 0.1*box.getRect().getWidth()+xPos,  yPos+0.8*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.4*box.getRect().getHeight(), (lightState >= GREEN_LOWER && lightState <= GREEN_UPPER) ? Color.GREEN : Color.GREEN.darker().darker());
+                yellow = new ColoredRectangle2D(0.4*box.getRect().getWidth()+xPos,  yPos+0.8*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.4*box.getRect().getHeight(), (lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker());
+                red = new ColoredRectangle2D(   0.7*box.getRect().getWidth()+xPos,  yPos+0.8*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.4*box.getRect().getHeight(), (lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker());
                 break;
             case NORTH:
-                box = new ColoredRectangle2D(xPos,yPos,0.3*RoadTile.ROAD_DIMENTION,0.1*RoadTile.ROAD_DIMENTION,Color.BLACK);
-                green = new ColoredRectangle2D( 0.1*box.getRect().getWidth()+xPos,  yPos-0.2*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= GREEN_LOWER && lightState <= GREEN_UPPER) ? Color.GREEN : Color.GREEN.darker().darker());
-                yellow = new ColoredRectangle2D(0.4*box.getRect().getWidth()+xPos,  yPos-0.2*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker());;
-                red = new ColoredRectangle2D(   0.7*box.getRect().getWidth()+xPos,  yPos-0.2*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker());
+                box = new ColoredRectangle2D(xPos - 0.1*RoadTile.ROAD_DIMENTION,yPos - 0.05*RoadTile.ROAD_DIMENTION,0.4*RoadTile.ROAD_DIMENTION,0.15*RoadTile.ROAD_DIMENTION,Color.BLACK);
+                green = new ColoredRectangle2D( 0.1*box.getRect().getWidth()+xPos - 0.1*RoadTile.ROAD_DIMENTION,  yPos-0.05*RoadTile.ROAD_DIMENTION-0.2*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.4*box.getRect().getHeight(), (lightState >= GREEN_LOWER && lightState <= GREEN_UPPER) ? Color.GREEN : Color.GREEN.darker().darker());
+                yellow = new ColoredRectangle2D(0.4*box.getRect().getWidth()+xPos - 0.1*RoadTile.ROAD_DIMENTION,  yPos-0.05*RoadTile.ROAD_DIMENTION-0.2*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.4*box.getRect().getHeight(), (lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker());;
+                red = new ColoredRectangle2D(   0.7*box.getRect().getWidth()+xPos - 0.1*RoadTile.ROAD_DIMENTION,  yPos-0.05*RoadTile.ROAD_DIMENTION-0.2*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.4*box.getRect().getHeight(), (lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker());
                 break;
             case EAST:
-                box = new ColoredRectangle2D(xPos,yPos,0.1*RoadTile.ROAD_DIMENTION,0.3*RoadTile.ROAD_DIMENTION,Color.BLACK);
-                green = new ColoredRectangle2D( box.getRect().getWidth()+xPos,  yPos+0.1*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= GREEN_LOWER && lightState <= GREEN_UPPER) ? Color.GREEN : Color.GREEN.darker().darker());
-                yellow = new ColoredRectangle2D(box.getRect().getWidth()+xPos,  yPos+0.4*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker());
-                red = new ColoredRectangle2D(   box.getRect().getWidth()+xPos,  yPos+0.7*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker());
+                box = new ColoredRectangle2D(xPos,yPos-0.1*RoadTile.ROAD_DIMENTION,0.15*RoadTile.ROAD_DIMENTION,0.4*RoadTile.ROAD_DIMENTION,Color.BLACK);
+                green = new ColoredRectangle2D( 0.8*box.getRect().getWidth()+xPos,  yPos-0.1*RoadTile.ROAD_DIMENTION+0.1*box.getRect().getHeight(), 0.4*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= GREEN_LOWER && lightState <= GREEN_UPPER) ? Color.GREEN : Color.GREEN.darker().darker());
+                yellow = new ColoredRectangle2D(0.8*box.getRect().getWidth()+xPos,  yPos-0.1*RoadTile.ROAD_DIMENTION+0.4*box.getRect().getHeight(), 0.4*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker());
+                red = new ColoredRectangle2D(   0.8*box.getRect().getWidth()+xPos,  yPos-0.1*RoadTile.ROAD_DIMENTION+0.7*box.getRect().getHeight(), 0.4*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker());
                 break;
             case WEST:
-                box = new ColoredRectangle2D(xPos,yPos,0.1*RoadTile.ROAD_DIMENTION,0.3*RoadTile.ROAD_DIMENTION,Color.BLACK);
-                green = new ColoredRectangle2D( -0.2*box.getRect().getWidth()+xPos,  yPos+0.1*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= GREEN_LOWER && lightState <= GREEN_UPPER) ? Color.GREEN : Color.GREEN.darker().darker());
-                yellow = new ColoredRectangle2D(-0.2*box.getRect().getWidth()+xPos,  yPos+0.4*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker());
-                red = new ColoredRectangle2D(   -0.2*box.getRect().getWidth()+xPos,  yPos+0.7*box.getRect().getHeight(), 0.2*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker());
+                box = new ColoredRectangle2D(xPos-0.05*RoadTile.ROAD_DIMENTION,yPos,0.15*RoadTile.ROAD_DIMENTION,0.4*RoadTile.ROAD_DIMENTION,Color.BLACK);
+                green = new ColoredRectangle2D( -0.2*box.getRect().getWidth()+xPos-0.05*RoadTile.ROAD_DIMENTION,  yPos+0.1*box.getRect().getHeight(), 0.4*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= GREEN_LOWER && lightState <= GREEN_UPPER) ? Color.GREEN : Color.GREEN.darker().darker());
+                yellow = new ColoredRectangle2D(-0.2*box.getRect().getWidth()+xPos-0.05*RoadTile.ROAD_DIMENTION,  yPos+0.4*box.getRect().getHeight(), 0.4*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= YELLOW_LOWER && lightState <= YELLOW_UPPER) ? Color.YELLOW : Color.YELLOW.darker().darker());
+                red = new ColoredRectangle2D(   -0.2*box.getRect().getWidth()+xPos-0.05*RoadTile.ROAD_DIMENTION,  yPos+0.7*box.getRect().getHeight(), 0.4*box.getRect().getWidth(),   0.2*box.getRect().getHeight(), (lightState >= RED_LOWER && lightState <= RED_UPPER) ? Color.RED : Color.RED.darker().darker());
                 break;
             default:
                 throw new RuntimeException("Invalid Direction in assembly of: " + this);
