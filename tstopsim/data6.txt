@@ -1,0 +1,8 @@
+b   b   b   b   b   b   b   b   b   b   b   b   b
+b   te  fe  fe  fe  ts  b   te  hs  fe  fe  ts  b
+b   fs  b   te  fe  i   fe  hw  he  fe  ts  fs  b
+b   fs  b   he  ts  he  ts  tn  i   fe  i   tw  b
+b   tn  fe  hw  fs  fs  fs  b   fs  b   fs  b   b
+b   te  fe  tw  tn  i   tw  b   fs  b   fs  b   b
+b   tn  fe  fe  fe  hn  fe  fe  hn  fe  tw  b   b
+b   b   b   b   b   b   b   b   b   b   b   b   b
