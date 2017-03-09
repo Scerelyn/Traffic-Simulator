@@ -194,12 +194,9 @@ public class Vehicle implements Visualizable {
                                 on.getCarSpots()[1][1] = null;
                                 xTile = 1;
                                 yTile = 0;
-                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){ //on the corner, so turn
+                            } else if(xTile == 1 && yTile == 0){ //on the corner, so turn
                                 this.rotate(dir.getLeft());
-                                on.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[0][1] = null;
-                                xTile = 0;
-                                yTile = 0;
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
                             } else if(xTile == 0 && yTile == 0){ //shouldnt be here, should've been facing west
                                 this.rotate(Direction.WEST);
                                 //internalMove(on,m.getAdjacent(xMap, yMap, dir));
