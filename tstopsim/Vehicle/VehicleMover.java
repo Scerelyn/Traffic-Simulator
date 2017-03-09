@@ -17,16 +17,24 @@ public class VehicleMover extends TimerTask{
             if(v.getLastActionID() == 0){
                 switch (v.getDir()) {
                     case NORTH:
-                        v.increInteryPos(-1 * incrementRate * Math.abs(v.getyLastPos() - v.getyPos()));
+                        if(v.getyInterPos() > v.getyPos()){
+                            v.increInteryPos(-1 * incrementRate * Math.abs(v.getyLastPos() - v.getyPos()));
+                        }
                         break;
                     case SOUTH:
-                        v.increInteryPos(incrementRate * Math.abs(v.getyLastPos() - v.getyPos()));
+                        if(v.getyInterPos() < v.getyPos()){
+                            v.increInteryPos(incrementRate * Math.abs(v.getyLastPos() - v.getyPos()));
+                        }
                         break;
                     case EAST:
-                        v.increInterxPos(incrementRate * Math.abs(v.getxLastPos() - v.getxPos()));
+                        if(v.getxInterPos() < v.getxPos()){
+                            v.increInterxPos(incrementRate * Math.abs(v.getxLastPos() - v.getxPos()));
+                        }
                         break;
                     case WEST:
-                        v.increInterxPos(-1 * incrementRate * Math.abs(v.getxLastPos() - v.getxPos()));
+                        if(v.getxInterPos() > v.getxPos()){
+                            v.increInterxPos(-1 * incrementRate * Math.abs(v.getxLastPos() - v.getxPos()));
+                        }
                         break;
                     default:
                 }
