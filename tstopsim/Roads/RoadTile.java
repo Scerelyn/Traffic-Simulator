@@ -112,6 +112,10 @@ public abstract class RoadTile implements Visualizable{
                 : true; //assume no lights is always green, since it kinda is by how people respond to no lights
     }
     
+    /**
+     * Reads config.txt to set the RoadTile.ROAD_DIMENTION value
+     * @return The read value on config.txt, if no file is found 100 is returned
+     */
     private static int readConfig(){
         File f = new File("src\\tstopsim\\config.txt");
         int sideLength = 100; //default value
