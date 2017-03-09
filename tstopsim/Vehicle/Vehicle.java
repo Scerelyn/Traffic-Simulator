@@ -159,996 +159,21 @@ public class Vehicle implements Visualizable {
         yLastPos = yPos;
         xInterPos = xLastPos;
         yInterPos = yLastPos;
-        Direction preRotate = dir;
-        boolean didATurn = false;
         doingATurn = this.doATurn();
         if(turnCooldown > 0){
             doingATurn = false;
             turnCooldown--;
         }
-        switch(dir){
-            case NORTH:
-                if(on instanceof TurnRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1){ //facing the center of the road, what
-                                this.rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){ 
-                                next.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[0][1] = null;
-                                yMap--;
-                                xTile = 1;
-                                yTile = 1;
-                            } else if(xTile == 0 && yTile == 0){ //wrong way
-                                rotate(dir.getOpposite());
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){ //also wrongway
-                                rotate(dir.getOpposite());
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null){
-                                on.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 1;
-                                yTile = 0;
-                            } else if(xTile == 1 && yTile == 0){ //on the corner, so turn
-                                this.rotate(dir.getLeft());
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){ //shouldnt be here, should've been facing west
-                                this.rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){ //on the wrong lane
-                                this.rotate(dir.getOpposite());
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null){ //corner
-                                on.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 1;
-                                yTile = 0;
-                            } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){ //on the edge
-                                    next.getCarSpots()[1][1] = this;
-                                    on.getCarSpots()[0][1] = null;
-                                    yMap--;
-                                    xTile = 1;
-                                    yTile = 1;                                
-                            } else if(xTile == 0 && xTile == 0){ //wrong way
-                                rotate(dir.getOpposite());
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){ //facing incorrectly
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && xTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(dir.getOpposite());
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        default:
-                            System.out.println("Undefined behavior when vehicle traversed in direction: " + dir);
-                    }
-                } else if(on instanceof TIntersectionRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){
-                                next.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[0][1] = null;
-                                yMap--;
-                                xTile = 1;
-                                yTile = 1;
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case SOUTH:
-                            if (xTile == 1 && yTile == 1) {
-                                if (doingATurn) {
-                                    rotate(dir.getRight());
-                                    didATurn = true;
-                                    doingATurn = false;
-                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                                } else if(on.getCarSpots()[0][1] == null){ //east or cant turn left (westward)
-                                    on.getCarSpots()[0][1] = this;
-                                    on.getCarSpots()[1][1] = null;
-                                    xTile = 1;
-                                    yTile = 0;
-                                }
-                            } else if (xTile == 0 && yTile == 1) {
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if (xTile == 1 && yTile == 0) {
-                                rotate(Direction.WEST);
-                                //internalMove(on, m.getAdjacent(xMap, yMap, dir));
-                            } else if (xTile == 0 && yTile == 0) {
-                                rotate(Direction.WEST);
-                                //internalMove(on, m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1){
-                                if(doingATurn){
-                                    rotate(dir.getRight());
-                                    didATurn = true;
-                                    doingATurn = false;
-                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                                } else if(on.getCarSpots()[0][1] == null){
-                                    on.getCarSpots()[0][1] = this;
-                                    on.getCarSpots()[1][1] = null;
-                                    yTile = 0;
-                                    xTile = 1;
-                                }
-                            } else if(xTile == 1 && yTile == 0 && next.isSelectedLightGreen(Direction.SOUTH) && next.getCarSpots()[1][1] == null){
-                                next.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[0][1] = null;
-                                yTile = 1;
-                                xTile = 1;
-                                yMap--;
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null){
-                                on.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 1;
-                                yTile = 0;
-                            } else if(xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){
-                                next.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[0][1] = null;
-                                yMap--;
-                                xTile = 1;
-                                yTile = 1;
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        default:
-                            System.out.println("Undefined behavior when traversing north on a t intersection");
-                    }
-           
-                } else if(on instanceof FourIntersectionRoadTile){
-                    if(xTile == 1 && yTile == 1){
-                        if(doingATurn){
-                            rotate(dir.getRight());
-                            didATurn = true;
-                            doingATurn = false;
-                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                        } else if(on.getCarSpots()[0][1] == null){
-                            on.getCarSpots()[0][1] = this;
-                            on.getCarSpots()[1][1] = null;
-                            xTile = 1;
-                            yTile = 0;
-                        }
-                    } else if(xTile == 1 && yTile == 0){
-                        if(doingATurn){
-                            rotate(dir.getLeft());
-                            didATurn = true;
-                            doingATurn = false;
-                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                        } else if(next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)){
-                            next.getCarSpots()[1][1] = this;
-                            on.getCarSpots()[0][1] = null;
-                            yMap--;
-                            xTile = 1;
-                            yTile = 1;
-                        }
-                        
-                    } else if(xTile == 0 && yTile == 1){
-                        rotate(Direction.SOUTH);
-                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    } else if(xTile == 0 && yTile == 0){
-                        rotate(Direction.SOUTH);
-                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    }
-                } else if(on instanceof StraightRoadTile){
-                    switch (on.getDir()) {
-                        case NORTH:
-                        case SOUTH:
-                            if (xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null) {
-                                on.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 1;
-                                yTile = 0;
-                            } else if (xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)) {
-                                next.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[0][1] = null;
-                                yMap--;
-                                xTile = 1;
-                                yTile = 1;
-                            } else if (xTile == 0 && yTile == 1) {
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if (xTile == 0 && yTile == 0) {
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        default:
-                            System.out.println("Undefined movement when travelling north on a straight road tile");
-                    }
-                }
-                break;
-            case SOUTH:
-                if(on instanceof TurnRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null){
-                                on.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[0][0] = null;
-                                yTile = 1;
-                                xTile = 0;
-                            }
-                            break;
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
-                                next.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 0;
-                                yTile = 0;
-                                yMap++;
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on, m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
-                                next.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[1][0] = null;
-                                yMap++;
-                                yTile = 0;
-                                xTile = 0;
-                            } else if(xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null){
-                                on.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[0][0] = null;
-                                yTile = 1;
-                                xTile = 0;
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when traveling south on a turn tile");
-                    }
-                } else if(on instanceof TIntersectionRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,next);
-                            } else if(xTile == 0 && yTile == 0){
-                                if(doingATurn){
-                                    rotate(dir.getRight());
-                                    didATurn = true;
-                                    doingATurn = false;
-                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                                } else if(on.getCarSpots()[1][0] == null){
-                                    on.getCarSpots()[1][0] = this;
-                                    on.getCarSpots()[0][0] = null;
-                                    xTile = 0;
-                                    yTile = 1;
-                                }
-                            }
-                            break;
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
-                                next.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 0;
-                                yTile = 0;
-                                yMap++;
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1){
-                                if(doingATurn){
-                                    rotate(dir.getRight());
-                                    didATurn = true;
-                                    doingATurn = false;
-                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                                } else {
-                                    rotate(Direction.NORTH);
-                                }
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
-                                next.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 0;
-                                yTile = 0;
-                                yMap++;
-                            } else if(xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null){
-                                on.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[0][0] = null;
-                                xTile = 0;
-                                yTile = 1;
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
-                                next.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 0;
-                                yTile = 0;
-                                yMap++;
-                            } else if(xTile == 0 && yTile == 0){
-                                if(doingATurn){
-                                    rotate(dir.getRight());
-                                    didATurn = true;
-                                    doingATurn = false;
-                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                                }
-                                else if(on.getCarSpots()[1][0] == null){
-                                    on.getCarSpots()[1][0] = this;
-                                    on.getCarSpots()[0][0] = null;
-                                    xTile = 0;
-                                    yTile = 1;
-                                }
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when traveling south on a t intersection");
-                    }
-                } else if(on instanceof FourIntersectionRoadTile){
-                    if (xTile == 1 && yTile == 1) {
-                        rotate(Direction.NORTH);
-                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    } else if (xTile == 1 && yTile == 0) {
-                        rotate(Direction.NORTH);
-                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    } else if (xTile == 0 && yTile == 1) {
-                        if(doingATurn){
-                            rotate(dir.getLeft());
-                            didATurn = true;
-                            doingATurn = false;
-                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                        } else if(next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
-                            next.getCarSpots()[0][0] = this;
-                            on.getCarSpots()[1][0] = null;
-                            xTile = 0;
-                            yTile = 0;
-                            yMap++;
-                        }
-                    } else if (xTile == 0 && yTile == 0) {
-                        if(doingATurn){
-                            rotate(dir.getRight());
-                            didATurn = true;
-                            doingATurn = false;
-                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                        } else if(on.getCarSpots()[1][0] == null){
-                            on.getCarSpots()[1][0] = this;
-                            on.getCarSpots()[0][0] = null;
-                            xTile = 0;
-                            yTile = 1;
-                        }
-                    }
-                } else if(on instanceof StraightRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)){
-                                next.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 0;
-                                yTile = 0;
-                                yMap++;
-                            } else if(xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null){
-                                on.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[0][0] = null;
-                                xTile = 0;
-                                yTile = 1;
-                            }
-                            break;
-                        case EAST:
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when traveling south on a straight road tile");
-                    }
-                }
-                break;
-            case WEST:
-                if(on instanceof TurnRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
-                                on.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 0;
-                                yTile = 0;
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
-                                next.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[0][0] = null;
-                                xTile = 1;
-                                yTile = 0;
-                                xMap--;
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
-                                on.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[0][1] = null;
-                                xTile = 0;
-                                yTile = 0;
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
-                                next.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[0][0] = null;
-                                xTile = 1;
-                                yTile = 0;
-                                xMap--;
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when traveling west on a turn tile");
-                    }
-                } else if(on instanceof TIntersectionRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                if(doingATurn){
-                                    rotate(dir.getRight());
-                                    didATurn = true;
-                                    doingATurn = false;
-                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                                } else if(on.getCarSpots()[0][0] == null){
-                                    on.getCarSpots()[0][0] = this;
-                                    on.getCarSpots()[0][1] = null;
-                                    xTile = 0;
-                                    yTile = 0;
-                                }
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
-                                next.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[0][0] = null;
-                                xTile = 1;
-                                yTile = 0;
-                                xMap--;
-                            }
-                            break;
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
-                                on.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[0][1] = null;
-                                xTile = 0;
-                                yTile = 0;
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
-                                next.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[0][0] = null;
-                                xTile = 1;
-                                yTile = 0;
-                                xMap--;
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
-                                next.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[0][0] = null;
-                                xTile = 1;
-                                yTile = 0;
-                                xMap--;
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when traveling west on a t intersection");
-                    }
-                } else if(on instanceof FourIntersectionRoadTile){
-                    if (xTile == 1 && yTile == 1) {
-                        rotate(Direction.EAST);
-                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
-                        on.getCarSpots()[0][0] = this;
-                        on.getCarSpots()[0][1] = null;
-                        xTile = 0;
-                        yTile = 0;
-                    } else if (xTile == 0 && yTile == 1) {
-                        rotate(Direction.EAST);
-                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    } else if (xTile == 0 && yTile == 0) {
-                        if(doingATurn){
-                            rotate(dir.getLeft());
-                            didATurn = true;
-                            doingATurn = false;
-                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                        } else if(next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
-                            next.getCarSpots()[0][1] = this;
-                            on.getCarSpots()[0][0] = null;
-                            xTile = 1;
-                            yTile = 0;
-                            xMap--;
-                        }
-                    }
-                } else if(on instanceof StraightRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null){
-                                on.getCarSpots()[0][0] = this;
-                                on.getCarSpots()[0][1] = null;
-                                xTile = 0;
-                                yTile = 0;
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.EAST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)){
-                                next.getCarSpots()[0][1] = this;
-                                on.getCarSpots()[0][0] = null;
-                                xTile = 1;
-                                yTile = 0;
-                                xMap--;
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when traveling west on a straight road tile");
-                    }
-                }
-                break;
-            case EAST:
-                if(on instanceof TurnRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
-                                next.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 0;
-                                yTile = 1;
-                                xMap++;
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null){
-                                
-                                on.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 1;
-                                yTile = 1;
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
-                                next.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 0;
-                                yTile = 1;
-                                xMap++;
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null){
-                                on.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 1;
-                                yTile = 1;
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when travelling east on a turn tile");
-                    }
-                } else if(on instanceof TIntersectionRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                            if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
-                                next.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 0;
-                                yTile = 1;
-                                xMap++;
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null){
-                                on.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 1;
-                                yTile = 1;
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
-                                next.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 0;
-                                yTile = 1;
-                                xMap++;
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                if(doingATurn){
-                                    rotate(dir.getRight());
-                                    didATurn = true;
-                                    doingATurn = false;
-                                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                                } else if(on.getCarSpots()[1][1] == null){
-                                    on.getCarSpots()[1][1] = this;
-                                    on.getCarSpots()[1][0] = null;
-                                    xTile = 1;
-                                    yTile = 1;
-                                }
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                            if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
-                                next.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 0;
-                                yTile = 1;
-                                xMap++;
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case WEST:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when traveling east on a 3 intersection tile");
-                    }
-                } else if(on instanceof FourIntersectionRoadTile){
-                    if (xTile == 1 && yTile == 1) {
-                        if(doingATurn){
-                            rotate(dir.getLeft());
-                            didATurn = true;
-                            doingATurn = false;
-                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                        } else if(next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
-                            next.getCarSpots()[1][0] = this;
-                            on.getCarSpots()[1][1] = null;
-                            xTile = 0;
-                            yTile = 1;
-                            xMap++;
-                        }
-                    } else if (xTile == 1 && yTile == 0) {
-                        rotate(Direction.WEST);
-                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    } else if (xTile == 0 && yTile == 1) {
-                        if(doingATurn){
-                            rotate(dir.getRight());
-                            didATurn = true;
-                            doingATurn = false;
-                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                        } else if(on.getCarSpots()[1][1] == null){
-                            on.getCarSpots()[1][1] = this;
-                            on.getCarSpots()[1][0] = null;
-                            xTile = 1;
-                            yTile = 1;
-                        }
-                    } else if (xTile == 0 && yTile == 0) {
-                        rotate(Direction.WEST);
-                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                    }
-                } else if(on instanceof StraightRoadTile){
-                    switch(on.getDir()){
-                        case NORTH:
-                        case SOUTH:
-                            if(xTile == 1 && yTile == 1){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 1 && yTile == 0){
-                                rotate(Direction.NORTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.SOUTH);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        case EAST:
-                        case WEST:
-                            if(xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)){
-                                next.getCarSpots()[1][0] = this;
-                                on.getCarSpots()[1][1] = null;
-                                xTile = 0;
-                                yTile = 1;
-                                xMap++;
-                            } else if(xTile == 1 && yTile == 0 && on.getCarSpots()[1][1] == null){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            } else if(xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null){
-                                on.getCarSpots()[1][1] = this;
-                                on.getCarSpots()[1][0] = null;
-                                xTile = 1;
-                                yTile = 1;
-                            } else if(xTile == 0 && yTile == 0){
-                                rotate(Direction.WEST);
-                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid direction when traveling east on a straight road tile");
-                    }
-                }
-                break;
-            default:
-                System.out.println("Invalid direction " + dir + " when vehicle " + this + " moved internally");
+        if (on instanceof TurnRoadTile) {
+            internalMove((TurnRoadTile) on, next);
+        } else if (on instanceof TIntersectionRoadTile) {
+            internalMove((TIntersectionRoadTile) on, next);
+        } else if (on instanceof FourIntersectionRoadTile) {
+            internalMove((FourIntersectionRoadTile) on, next);
+        } else if (on instanceof StraightRoadTile) {
+            internalMove((StraightRoadTile) on, next);
         }
-        if(didATurn && preRotate != dir){
-            this.lastActionID = 1;
-            turnCooldown = 2;
-        } else {
-            this.lastActionID = 0;
-        }
+        
         this.xPos = RoadTile.ROAD_DIMENTION*xMap + 0.15*RoadTile.ROAD_DIMENTION + xTile*0.4*RoadTile.ROAD_DIMENTION;
         this.yPos = RoadTile.ROAD_DIMENTION*yMap + 0.15*RoadTile.ROAD_DIMENTION + yTile*0.4*RoadTile.ROAD_DIMENTION;
         if(this.xPos != this.xLastPos || this.yPos != this.yLastPos){
@@ -1158,7 +183,1019 @@ public class Vehicle implements Visualizable {
         }
         return lastActionID;
     }
+    
+    public void internalMove(TurnRoadTile on, RoadTile next){
+        
+        switch (this.dir) {
+            case NORTH:
+                switch (on.getDir()) {
+                    case NORTH:
+                        if (xTile == 1 && yTile == 1) { //facing the center of the road, what
+                            this.rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)) {
+                            next.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[0][1] = null;
+                            yMap--;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && yTile == 0) { //wrong way
+                            rotate(dir.getOpposite());
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) { //also wrongway
+                            rotate(dir.getOpposite());
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null) {
+                            on.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 1;
+                            yTile = 0;
+                        } else if (xTile == 1 && yTile == 0) { //on the corner, so turn
+                            this.rotate(dir.getLeft());
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) { //shouldnt be here, should've been facing west
+                            this.rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) { //on the wrong lane
+                            this.rotate(dir.getOpposite());
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case WEST:
+                        if (xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null) { //corner
+                            on.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 1;
+                            yTile = 0;
+                        } else if (xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)) { //on the edge
+                            next.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[0][1] = null;
+                            yMap--;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && xTile == 0) { //wrong way
+                            rotate(dir.getOpposite());
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) { //facing incorrectly
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && xTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(dir.getOpposite());
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    default:
+                        System.out.println("Undefined behavior when vehicle traversed north on a turn road tile");
+                }
+                break;
+            case SOUTH:
+                switch (on.getDir()) {
+                    case NORTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null) {
+                            on.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[0][0] = null;
+                            yTile = 1;
+                            xTile = 0;
+                        }
+                        break;
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)) {
+                            next.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 0;
+                            yTile = 0;
+                            yMap++;
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on, m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)) {
+                            next.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[1][0] = null;
+                            yMap++;
+                            yTile = 0;
+                            xTile = 0;
+                        } else if (xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null) {
+                            on.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[0][0] = null;
+                            yTile = 1;
+                            xTile = 0;
+                        }
+                        break;
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when traveling south on a turn tile");
+                }
+                break;
+            case WEST:
+                switch (on.getDir()) {
+                    case NORTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
+                            on.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[0][1] = null;
+                            xTile = 0;
+                            yTile = 0;
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)) {
+                            next.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 1;
+                            yTile = 0;
+                            xMap--;
+                        }
+                        break;
+                    case EAST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
+                            on.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[0][1] = null;
+                            xTile = 0;
+                            yTile = 0;
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)) {
+                            next.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 1;
+                            yTile = 0;
+                            xMap--;
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when traveling west on a turn tile");
+                }
+                break;
+            case EAST:
+                switch (on.getDir()) {
+                    case NORTH:
+                        if (xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)) {
+                            next.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 0;
+                            yTile = 1;
+                            xMap++;
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null) {
+                            on.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                        if (xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)) {
+                            next.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 0;
+                            yTile = 1;
+                            xMap++;
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null) {
+                            on.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when travelling east on a turn tile");
+                }
+                break;
+           
+        }
+    }
+    
+    public void internalMove(TIntersectionRoadTile on, RoadTile next){
+        Direction preRotate = dir;
+        boolean didATurn = false;
+        switch (this.dir) {
+            case NORTH:
+                switch (on.getDir()) {
+                    case NORTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)) {
+                            next.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[0][1] = null;
+                            yMap--;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            if (doingATurn) {
+                                rotate(dir.getRight());
+                                didATurn = true;
+                                doingATurn = false;
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if (on.getCarSpots()[0][1] == null) { //east or cant turn left (westward)
+                                on.getCarSpots()[0][1] = this;
+                                on.getCarSpots()[1][1] = null;
+                                xTile = 1;
+                                yTile = 0;
+                            }
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on, m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on, m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                        if (xTile == 1 && yTile == 1) {
+                            if (doingATurn) {
+                                rotate(dir.getRight());
+                                didATurn = true;
+                                doingATurn = false;
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if (on.getCarSpots()[0][1] == null) {
+                                on.getCarSpots()[0][1] = this;
+                                on.getCarSpots()[1][1] = null;
+                                yTile = 0;
+                                xTile = 1;
+                            }
+                        } else if (xTile == 1 && yTile == 0 && next.isSelectedLightGreen(Direction.SOUTH) && next.getCarSpots()[1][1] == null) {
+                            next.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[0][1] = null;
+                            yTile = 1;
+                            xTile = 1;
+                            yMap--;
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case WEST:
+                        if (xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null) {
+                            on.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 1;
+                            yTile = 0;
+                        } else if (xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)) {
+                            next.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[0][1] = null;
+                            yMap--;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    default:
+                        System.out.println("Undefined behavior when traversing north on a t intersection");
+                }
+                break;
+            case SOUTH:
+                switch (on.getDir()) {
+                    case NORTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,next);
+                        } else if (xTile == 0 && yTile == 0) {
+                            if (doingATurn) {
+                                rotate(dir.getRight());
+                                didATurn = true;
+                                doingATurn = false;
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if (on.getCarSpots()[1][0] == null) {
+                                on.getCarSpots()[1][0] = this;
+                                on.getCarSpots()[0][0] = null;
+                                xTile = 0;
+                                yTile = 1;
+                            }
+                        }
+                        break;
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)) {
+                            next.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 0;
+                            yTile = 0;
+                            yMap++;
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                        if (xTile == 1 && yTile == 1) {
+                            if (doingATurn) {
+                                rotate(dir.getRight());
+                                didATurn = true;
+                                doingATurn = false;
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else {
+                                rotate(Direction.NORTH);
+                            }
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)) {
+                            next.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 0;
+                            yTile = 0;
+                            yMap++;
+                        } else if (xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null) {
+                            on.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 0;
+                            yTile = 1;
+                        }
+                        break;
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.NORTH)) {
+                            next.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 0;
+                            yTile = 0;
+                            yMap++;
+                        } else if (xTile == 0 && yTile == 0) {
+                            if (doingATurn) {
+                                rotate(dir.getRight());
+                                didATurn = true;
+                                doingATurn = false;
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if (on.getCarSpots()[1][0] == null) {
+                                on.getCarSpots()[1][0] = this;
+                                on.getCarSpots()[0][0] = null;
+                                xTile = 0;
+                                yTile = 1;
+                            }
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when traveling south on a t intersection");
+                }
+                break;
+            case WEST:
+                switch (on.getDir()) {
+                    case NORTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            if (doingATurn) {
+                                rotate(dir.getRight());
+                                didATurn = true;
+                                doingATurn = false;
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if (on.getCarSpots()[0][0] == null) {
+                                on.getCarSpots()[0][0] = this;
+                                on.getCarSpots()[0][1] = null;
+                                xTile = 0;
+                                yTile = 0;
+                            }
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)) {
+                            next.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 1;
+                            yTile = 0;
+                            xMap--;
+                        }
+                        break;
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
+                            on.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[0][1] = null;
+                            xTile = 0;
+                            yTile = 0;
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)) {
+                            next.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 1;
+                            yTile = 0;
+                            xMap--;
+                        }
+                        break;
+                    case EAST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)) {
+                            next.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 1;
+                            yTile = 0;
+                            xMap--;
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when traveling west on a t intersection");
+                }
+                break;
+            case EAST:
+                switch (on.getDir()) {
+                    case NORTH:
+                        if (xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)) {
+                            next.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 0;
+                            yTile = 1;
+                            xMap++;
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null) {
+                            on.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)) {
+                            next.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 0;
+                            yTile = 1;
+                            xMap++;
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            if (doingATurn) {
+                                rotate(dir.getRight());
+                                didATurn = true;
+                                doingATurn = false;
+                                //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                            } else if (on.getCarSpots()[1][1] == null) {
+                                on.getCarSpots()[1][1] = this;
+                                on.getCarSpots()[1][0] = null;
+                                xTile = 1;
+                                yTile = 1;
+                            }
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                        if (xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)) {
+                            next.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 0;
+                            yTile = 1;
+                            xMap++;
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when traveling east on a 3 intersection tile");
+                }
+                break;
+        }
+        if(didATurn && preRotate != dir){
+            this.lastActionID = 1;
+            turnCooldown = 2;
+        } else {
+            this.lastActionID = 0;
+        }
+    }
+    
+    public void internalMove(StraightRoadTile on, RoadTile next) {
+        switch (this.dir) {
+            case NORTH:
+                switch (on.getDir()) {
+                    case NORTH:
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1 && on.getCarSpots()[0][1] == null) {
+                            on.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 1;
+                            yTile = 0;
+                        } else if (xTile == 1 && yTile == 0 && next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)) {
+                            next.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[0][1] = null;
+                            yMap--;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    default:
+                        System.out.println("Undefined movement when travelling north on a straight road tile");
+                }
+                break;
+            case SOUTH:
+                switch (on.getDir()) {
+                    case NORTH:
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)) {
+                            next.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 0;
+                            yTile = 0;
+                            yMap++;
+                        } else if (xTile == 0 && yTile == 0 && on.getCarSpots()[1][0] == null) {
+                            on.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 0;
+                            yTile = 1;
+                        }
+                        break;
+                    case EAST:
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when traveling south on a straight road tile");
+                }
+                break;
+            case WEST:
+                switch (on.getDir()) {
+                    case NORTH:
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                    case WEST:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
+                            on.getCarSpots()[0][0] = this;
+                            on.getCarSpots()[0][1] = null;
+                            xTile = 0;
+                            yTile = 0;
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.EAST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0 && next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)) {
+                            next.getCarSpots()[0][1] = this;
+                            on.getCarSpots()[0][0] = null;
+                            xTile = 1;
+                            yTile = 0;
+                            xMap--;
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when traveling west on a straight road tile");
+                }
+                break;
+            case EAST:
+                switch (on.getDir()) {
+                    case NORTH:
+                    case SOUTH:
+                        if (xTile == 1 && yTile == 1) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 1 && yTile == 0) {
+                            rotate(Direction.NORTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.SOUTH);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    case EAST:
+                    case WEST:
+                        if (xTile == 1 && yTile == 1 && next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)) {
+                            next.getCarSpots()[1][0] = this;
+                            on.getCarSpots()[1][1] = null;
+                            xTile = 0;
+                            yTile = 1;
+                            xMap++;
+                        } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[1][1] == null) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        } else if (xTile == 0 && yTile == 1 && on.getCarSpots()[1][1] == null) {
+                            on.getCarSpots()[1][1] = this;
+                            on.getCarSpots()[1][0] = null;
+                            xTile = 1;
+                            yTile = 1;
+                        } else if (xTile == 0 && yTile == 0) {
+                            rotate(Direction.WEST);
+                            //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid direction when traveling east on a straight road tile");
+                }
+                break;
+        }
+    }
+    
+    public void internalMove(FourIntersectionRoadTile on, RoadTile next){
+        Direction preRotate = dir;
+        boolean didATurn = false;
+        switch(this.dir) {
+            case NORTH:
+                if (xTile == 1 && yTile == 1) {
+                    if (doingATurn) {
+                        rotate(dir.getRight());
+                        didATurn = true;
+                        doingATurn = false;
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (on.getCarSpots()[0][1] == null) {
+                        on.getCarSpots()[0][1] = this;
+                        on.getCarSpots()[1][1] = null;
+                        xTile = 1;
+                        yTile = 0;
+                    }
+                } else if (xTile == 1 && yTile == 0) {
+                    if (doingATurn) {
+                        rotate(dir.getLeft());
+                        didATurn = true;
+                        doingATurn = false;
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (next.getCarSpots()[1][1] == null && next.isSelectedLightGreen(Direction.SOUTH)) {
+                        next.getCarSpots()[1][1] = this;
+                        on.getCarSpots()[0][1] = null;
+                        yMap--;
+                        xTile = 1;
+                        yTile = 1;
+                    }
 
+                } else if (xTile == 0 && yTile == 1) {
+                    rotate(Direction.SOUTH);
+                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                } else if (xTile == 0 && yTile == 0) {
+                    rotate(Direction.SOUTH);
+                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                }
+                break;
+            case SOUTH:
+                if (xTile == 1 && yTile == 1) {
+                    rotate(Direction.NORTH);
+                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                } else if (xTile == 1 && yTile == 0) {
+                    rotate(Direction.NORTH);
+                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                } else if (xTile == 0 && yTile == 1) {
+                    if (doingATurn) {
+                        rotate(dir.getLeft());
+                        didATurn = true;
+                        doingATurn = false;
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (next.getCarSpots()[0][0] == null && next.isSelectedLightGreen(Direction.NORTH)) {
+                        next.getCarSpots()[0][0] = this;
+                        on.getCarSpots()[1][0] = null;
+                        xTile = 0;
+                        yTile = 0;
+                        yMap++;
+                    }
+                } else if (xTile == 0 && yTile == 0) {
+                    if (doingATurn) {
+                        rotate(dir.getRight());
+                        didATurn = true;
+                        doingATurn = false;
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (on.getCarSpots()[1][0] == null) {
+                        on.getCarSpots()[1][0] = this;
+                        on.getCarSpots()[0][0] = null;
+                        xTile = 0;
+                        yTile = 1;
+                    }
+                }
+                break;
+            case WEST:
+                if (xTile == 1 && yTile == 1) {
+                    rotate(Direction.EAST);
+                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
+                    on.getCarSpots()[0][0] = this;
+                    on.getCarSpots()[0][1] = null;
+                    xTile = 0;
+                    yTile = 0;
+                } else if (xTile == 0 && yTile == 1) {
+                    rotate(Direction.EAST);
+                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                } else if (xTile == 0 && yTile == 0) {
+                    if (doingATurn) {
+                        rotate(dir.getLeft());
+                        didATurn = true;
+                        doingATurn = false;
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (next.getCarSpots()[0][1] == null && next.isSelectedLightGreen(Direction.EAST)) {
+                        next.getCarSpots()[0][1] = this;
+                        on.getCarSpots()[0][0] = null;
+                        xTile = 1;
+                        yTile = 0;
+                        xMap--;
+                    }
+                }
+                break;
+            case EAST:
+                if (xTile == 1 && yTile == 1) {
+                    if (doingATurn) {
+                        rotate(dir.getLeft());
+                        didATurn = true;
+                        doingATurn = false;
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (next.getCarSpots()[1][0] == null && next.isSelectedLightGreen(Direction.WEST)) {
+                        next.getCarSpots()[1][0] = this;
+                        on.getCarSpots()[1][1] = null;
+                        xTile = 0;
+                        yTile = 1;
+                        xMap++;
+                    }
+                } else if (xTile == 1 && yTile == 0) {
+                    rotate(Direction.WEST);
+                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                } else if (xTile == 0 && yTile == 1) {
+                    if (doingATurn) {
+                        rotate(dir.getRight());
+                        didATurn = true;
+                        doingATurn = false;
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if (on.getCarSpots()[1][1] == null) {
+                        on.getCarSpots()[1][1] = this;
+                        on.getCarSpots()[1][0] = null;
+                        xTile = 1;
+                        yTile = 1;
+                    }
+                } else if (xTile == 0 && yTile == 0) {
+                    rotate(Direction.WEST);
+                    //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                }
+                break;
+        }
+        if(didATurn && preRotate != dir){
+            this.lastActionID = 1;
+            turnCooldown = 2;
+        } else {
+            this.lastActionID = 0;
+        }
+    }
+    
     public double getxPos() {
         return xPos;
     }
