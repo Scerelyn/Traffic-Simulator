@@ -152,8 +152,6 @@ public class Vehicle implements Visualizable {
      * to
      * @return Returns a 0 if the vehicle moved places, returns 1 if a turn was made
      */
-    //this method is cringe worthy
-    //TODO split this method up based on RoadTile's types
     public int internalMove(RoadTile on, RoadTile next){
         xLastPos = xPos;
         yLastPos = yPos;
@@ -184,7 +182,12 @@ public class Vehicle implements Visualizable {
         return lastActionID;
     }
     
-    public void internalMove(TurnRoadTile on, RoadTile next){
+    /**
+     * Internally moves the vehicle but the on roadtile is a TurnRoadTile instance. This is called by internalMove(RoadTile, RoadTile)
+     * @param on The TurnRoadTile this is on
+     * @param next The adjacent RoadTile
+     */
+    private void internalMove(TurnRoadTile on, RoadTile next){
         
         switch (this.dir) {
             case NORTH:
@@ -495,7 +498,12 @@ public class Vehicle implements Visualizable {
         }
     }
     
-    public void internalMove(TIntersectionRoadTile on, RoadTile next){
+    /**
+     * Internally moves the vehicle but the on roadtile is a TIntersectionRoadTile instance. This is called by internalMove(RoadTile, RoadTile)
+     * @param on The TIntersectionRoadTile this is on
+     * @param next The adjacent RoadTile
+     */
+    private void internalMove(TIntersectionRoadTile on, RoadTile next){
         Direction preRotate = dir;
         boolean didATurn = false;
         switch (this.dir) {
@@ -876,7 +884,12 @@ public class Vehicle implements Visualizable {
         }
     }
     
-    public void internalMove(StraightRoadTile on, RoadTile next) {
+    /**
+     * Internally moves the vehicle but the on roadtile is a StraightRoadTile instance. This is called by internalMove(RoadTile, RoadTile)
+     * @param on The StraightRoadTile this is on
+     * @param next The adjacent RoadTile
+     */
+    private void internalMove(StraightRoadTile on, RoadTile next) {
         switch (this.dir) {
             case NORTH:
                 switch (on.getDir()) {
@@ -1053,7 +1066,12 @@ public class Vehicle implements Visualizable {
         }
     }
     
-    public void internalMove(FourIntersectionRoadTile on, RoadTile next){
+    /**
+     * Internally moves the vehicle but the on roadtile is a FourIntersectionRoadTile instance. This is called by internalMove(RoadTile, RoadTile)
+     * @param on The FourIntersectionRoadTile this is on
+     * @param next The adjacent RoadTile
+     */
+    private void internalMove(FourIntersectionRoadTile on, RoadTile next){
         Direction preRotate = dir;
         boolean didATurn = false;
         switch(this.dir) {
