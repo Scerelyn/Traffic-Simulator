@@ -1,4 +1,5 @@
 package tstopsim;
+import java.io.File;
 import javax.swing.*;
 import java.util.Timer;
 import tstopsim.Roads.*;
@@ -10,7 +11,7 @@ public class Runner {
 
     public static void main(String[] args) {
         JFrame jf = new JFrame();
-        Map m = new Map();
+        Map m = new Map(new File("src\\tstopsim\\data.txt"));
 
         Timer mainTimer = new Timer();
         LightCycler lc = new LightCycler(m);
