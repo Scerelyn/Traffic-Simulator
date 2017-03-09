@@ -114,12 +114,12 @@ public abstract class RoadTile implements Visualizable{
     
     private static int readConfig(){
         File f = new File("src\\tstopsim\\config.txt");
-        int sideLength = 100;
+        int sideLength = 100; //default value
         try {
             Scanner sc = new Scanner(f);
             sideLength = sc.nextInt();
         } catch (FileNotFoundException ex) {
-            System.out.println("Config file not found, oh no");
+            System.out.println("Config file not found, defaulting to value 100px for roadtile side length");
         }
         return sideLength;
     }
