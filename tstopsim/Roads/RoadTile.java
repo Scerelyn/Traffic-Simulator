@@ -1,6 +1,8 @@
 package tstopsim.Roads;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import tstopsim.Visual.*;
 import tstopsim.Vehicle.*;
@@ -13,7 +15,7 @@ public abstract class RoadTile implements Visualizable{
     /*
     The length and width of the RoadTile and all inheriting Tiles. All objects related to RoadTiles are based off of this dimention
     */
-    public static final int ROAD_DIMENTION = 100;
+    public static final int ROAD_DIMENTION = readConfig();
     
     protected ArrayList<ColoredRectangle2D> parts;
     protected Vehicle[][] carSpots = new Vehicle[2][2]; //{ north{west, east}, south{west, east}}
@@ -108,5 +110,17 @@ public abstract class RoadTile implements Visualizable{
         return (l != null) 
                 ? l.getLightState() >= Light.GREEN_LOWER && l.getLightState() <= Light.GREEN_UPPER 
                 : true; //assume no lights is always green, since it kinda is by how people respond to no lights
+    }
+    
+    private static int readConfig(){
+        File f = new File("src\\tstopsim\\config.txt");
+        int sideLength = 100;
+        try {
+            Scanner sc = new Scanner(f);
+            sideLength = sc.nextInt();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Config file not found, oh no");
+        }
+        return sideLength;
     }
 }
