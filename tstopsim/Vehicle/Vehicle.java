@@ -1148,11 +1148,18 @@ public class Vehicle implements Visualizable {
                 if (xTile == 1 && yTile == 1) {
                     rotate(Direction.EAST);
                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
-                } else if (xTile == 1 && yTile == 0 && on.getCarSpots()[0][0] == null) {
-                    on.getCarSpots()[0][0] = this;
-                    on.getCarSpots()[0][1] = null;
-                    xTile = 0;
-                    yTile = 0;
+                } else if (xTile == 1 && yTile == 0) {
+                    if (doingATurn) {
+                        rotate(dir.getRight());
+                        didATurn = true;
+                        doingATurn = false;
+                        //internalMove(on,m.getAdjacent(xMap, yMap, dir));
+                    } else if(on.getCarSpots()[0][0] == null){
+                        on.getCarSpots()[0][0] = this;
+                        on.getCarSpots()[0][1] = null;
+                        xTile = 0;
+                        yTile = 0;
+                    }
                 } else if (xTile == 0 && yTile == 1) {
                     rotate(Direction.EAST);
                     //internalMove(on,m.getAdjacent(xMap, yMap, dir));
