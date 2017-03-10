@@ -35,7 +35,7 @@ public class FileWindow extends JFrame{
         this.getContentPane().add(loadButton);
         loadButton.setFont(use);
         loadButton.addActionListener(ev -> {
-            JFileChooser fc = new JFileChooser();
+            JFileChooser fc = new JFileChooser("C:\\Crossroads Maps");
             fc.setVisible(true);
             if (ev.getSource() == loadButton) {
                 int returnVal = fc.showOpenDialog(this);
