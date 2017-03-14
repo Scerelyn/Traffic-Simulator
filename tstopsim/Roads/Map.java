@@ -214,6 +214,10 @@ public class Map extends JComponent {
                                 }
                                 i++;
                                 break;
+                            case 'm':
+                                tempRow.add(new McDonaldsRoadTile(pos, row));
+                                pos++;
+                                break;
                             default:
                                 tempRow.add(new NonDrivableRoadTile(pos, row));
                                 pos++;
