@@ -12,10 +12,10 @@ import tstopsim.Vehicle.*;
 public class Map extends JComponent {
     private RoadTile[][] city;
     private ArrayList<Vehicle> cars = new ArrayList<>();
-    private File currentMap = null;
+    private File currentMap = new File("src\\tstopsim\\data.txt");
     
     public Map(){
-        this.city = new RoadTile[][]{{new FourIntersectionRoadTile(0,0)}};
+        this.city = parseFile(currentMap);
     }
     
     public Map(File f){
