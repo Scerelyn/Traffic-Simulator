@@ -218,6 +218,118 @@ public class Map extends JComponent {
                                 tempRow.add(new McDonaldsRoadTile(pos, row));
                                 pos++;
                                 break;
+                            case 'd': //decorative
+                                switch(rowArr[i + 1]){ //type of decorative
+                                    case 'c': //center
+                                        switch(rowArr[i + 2]){ //color
+                                            case 'a':
+                                                tempRow.add(new DecorativeCenterRoadTile(pos,row,Direction.NORTH,RoadTile.WATER_COLOR));
+                                                pos++;
+                                                break;
+                                            case 'g':
+                                                tempRow.add(new DecorativeCenterRoadTile(pos,row,Direction.NORTH,RoadTile.GRASS_COLOR));
+                                                pos++;
+                                                break;
+                                        }
+                                        i++;
+                                        break;
+                                    case 'q': //edge
+                                        switch(rowArr[i + 2]){ //color
+                                            case 'a':
+                                                switch(rowArr[i+3]){ //direction
+                                                    case 'n':
+                                                        tempRow.add(new DecorativeEdgeRoadTile(pos,row,Direction.NORTH,RoadTile.WATER_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 's':
+                                                        tempRow.add(new DecorativeEdgeRoadTile(pos,row,Direction.SOUTH,RoadTile.WATER_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 'e':
+                                                        tempRow.add(new DecorativeEdgeRoadTile(pos,row,Direction.EAST,RoadTile.WATER_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 'w':
+                                                        tempRow.add(new DecorativeEdgeRoadTile(pos,row,Direction.WEST,RoadTile.WATER_COLOR));
+                                                        pos++;
+                                                        break;
+                                                }
+                                                i++;
+                                                break;
+                                            case 'g':
+                                                switch(rowArr[i+3]){
+                                                    case 'n':
+                                                        tempRow.add(new DecorativeEdgeRoadTile(pos,row,Direction.NORTH,RoadTile.GRASS_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 's':
+                                                        tempRow.add(new DecorativeEdgeRoadTile(pos,row,Direction.SOUTH,RoadTile.GRASS_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 'e':
+                                                        tempRow.add(new DecorativeEdgeRoadTile(pos,row,Direction.EAST,RoadTile.GRASS_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 'w':
+                                                        tempRow.add(new DecorativeEdgeRoadTile(pos,row,Direction.WEST,RoadTile.GRASS_COLOR));
+                                                        pos++;
+                                                        break;
+                                                }
+                                                i++;
+                                                break;
+                                        }
+                                        i++;
+                                        break;
+                                    case 'v': //corner/vertex
+                                        switch(rowArr[i + 2]){ //color
+                                            case 'a':
+                                                switch(rowArr[i+3]){ //direction
+                                                    case 'n':
+                                                        tempRow.add(new DecorativeCornerRoadTile(pos,row,Direction.NORTH,RoadTile.WATER_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 's':
+                                                        tempRow.add(new DecorativeCornerRoadTile(pos,row,Direction.SOUTH,RoadTile.WATER_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 'e':
+                                                        tempRow.add(new DecorativeCornerRoadTile(pos,row,Direction.EAST,RoadTile.WATER_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 'w':
+                                                        tempRow.add(new DecorativeCornerRoadTile(pos,row,Direction.WEST,RoadTile.WATER_COLOR));
+                                                        pos++;
+                                                        break;
+                                                }
+                                                i++;
+                                                break;
+                                            case 'g':
+                                                switch(rowArr[i+3]){
+                                                    case 'n':
+                                                        tempRow.add(new DecorativeCornerRoadTile(pos,row,Direction.NORTH,RoadTile.GRASS_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 's':
+                                                        tempRow.add(new DecorativeCornerRoadTile(pos,row,Direction.SOUTH,RoadTile.GRASS_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 'e':
+                                                        tempRow.add(new DecorativeCornerRoadTile(pos,row,Direction.EAST,RoadTile.GRASS_COLOR));
+                                                        pos++;
+                                                        break;
+                                                    case 'w':
+                                                        tempRow.add(new DecorativeCornerRoadTile(pos,row,Direction.WEST,RoadTile.GRASS_COLOR));
+                                                        pos++;
+                                                        break;
+                                                }
+                                                i++;
+                                                break;
+                                        }
+                                        i++;
+                                        break;
+                                }
+                                i++;
+                                break; //oh man what a mess
                             default:
                                 tempRow.add(new NonDrivableRoadTile(pos, row));
                                 pos++;

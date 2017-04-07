@@ -1,13 +1,59 @@
 File setup:
+Files end in either .txt or .traffic
+The data is the same with either, its all just plain text
 
-b - nondrivable, think buildings
-i - intersection
-f* - straight piece, ex: fn gives a straight piece going north, which happens to be identical to fs,
-t* - turn piece, tn gives north>east, te gives east>south, ts gives south>west, tw gives west>north
-h* - gives a three way piece, where direction refers to the direction of the third road, so hs gives a T shape
+Data entry:
+b - Nondrivable tile. Same color as the sidewalk, used for filler space and borders
+i - Four way intersection with street lights
+f* - Straight road piece. n and s give vertical road, e and w give a horizontal road
+t* - Turn piece, 
+    tn gives north to east, 
+    te gives east to south, 
+    ts gives south to west, 
+    tw gives west to north
+h* - Hives a three way piece, where direction refers to the direction of the third road, so hs gives a T shape
 
-* - refers to a cardinal direction
+* - refers to a cardinal direction, use lowercase single characters
+    n = North, s = South, e = East, w = West
 
+Notes:
 Spaces are ignored, invalid characters are treated as nondrivable roadtiles
-It is recommended to surround your map with nondrivable roadtiles so it looks neaters, but not needed
+It is recommended to surround your map with nondrivable roadtiles so it looks neater, but not needed
 Minimum map size is 3x3
+
+Extra Tiles:
+m - "M.C. Donalds" - functions like a nondrivable tile
+
+Decorative tiles:
+A bit more complicated as this is a 3-4 characters long
+    Format is d***, or for center pieces d**
+
+Breakdown:
+First character - identifier
+d - identifies that this is a decorative tile
+Second character - type
+q - and edge piece, as in a side walk on one side
+    Respective fourth characters:
+        n - sidewalk on the north
+        s - sidewalk on the south
+        e - sidewalk on the east
+        w - sidewalk on the west
+c - center piece, requires no direction for a fourth character
+v - corner piece, like turn pieces but without the stub
+    Directions are identical to turn road tiles
+    Respective fourth characters:
+        n - west/southern sidewalks
+        e - north/western sidewalks
+        s - north/eastern sidewalks
+        w - east/southern sidewalks
+Third character - color type
+    g - grass/green background
+    a - water/blue background
+Fourth character
+    direction for the tile goes here, unless its a center piece then just dont put anything
+
+examples:
+dqgn - gives a decorative edge tile thats made of grass with a northern sidewalk
+dca - gives a center piece made of water
+dvwa - gives a decorative corner tiles made of water with sidewalks on the south and east sides
+

@@ -23,7 +23,7 @@ public class StraightRoadTile extends RoadTile{
                 break;
             case EAST:
             case WEST:
-                components.add(new ColoredRectangle2D(xPos, yPos, RoadTile.ROAD_DIMENTION,0.1*RoadTile.ROAD_DIMENTION,Color.LIGHT_GRAY));
+                components.add(new ColoredRectangle2D(xPos, yPos, RoadTile.ROAD_DIMENTION,0.1*RoadTile.ROAD_DIMENTION,SIDE_WALK_COLOR));
                 components.add(new ColoredRectangle2D(xPos, yPos+0.9*RoadTile.ROAD_DIMENTION, RoadTile.ROAD_DIMENTION, 0.1*RoadTile.ROAD_DIMENTION,SIDE_WALK_COLOR));
                 break;
             default:
