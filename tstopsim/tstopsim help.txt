@@ -13,6 +13,9 @@ t* - Turn piece,
     tw gives west to north
 h* - Hives a three way piece, where direction refers to the direction of the third road, so hs gives a T shape
 
+adding a y at the end of a turn tile or straight tile will remove the sidewalks
+ie: fey will give an eastern facing straight tile without sidewalks
+
 * - refers to a cardinal direction, use lowercase single characters
     n = North, s = South, e = East, w = West
 
