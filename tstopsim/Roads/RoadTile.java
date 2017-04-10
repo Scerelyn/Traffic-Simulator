@@ -70,13 +70,13 @@ public abstract class RoadTile implements Visualizable{
      * and direction as well setting specialColor for tiles which require 
      * a certain color
      * 
-     * @param x
-     * @param y
-     * @param dir
-     * @param c 
+     * @param x The x coordinate to move to
+     * @param y The y coordinate to move to
+     * @param dir The direction to face
+     * @param c The special color to assign
      */
     public final void setBounds(double x, double y, Direction dir, Color c){
-        
+        this.specialColor = c;
         setBounds(x,y,dir);
     }
     

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import tstopsim.Visual.ColoredRectangle2D;
 import tstopsim.Visual.Direction;
 
-public class DecorativeCenterRoadTile extends RoadTile {
+public class DecorativeCenterRoadTile extends NonDrivableRoadTile {
     
     public DecorativeCenterRoadTile(double x, double y, Direction dir, Color c) {
         super(x, y, dir, c);

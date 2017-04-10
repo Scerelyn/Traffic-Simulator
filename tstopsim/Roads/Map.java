@@ -414,7 +414,7 @@ public class Map extends JComponent {
             int yTrng = (int)(Math.random() * 2);
             int xTrng = (int)(Math.random() * 2);
             
-            while(this.getCity()[yMrng][xMrng] instanceof NonDrivableRoadTile || this.getCity()[yMrng][xMrng] instanceof DecorativeCenterRoadTile){
+            while(this.getCity()[yMrng][xMrng] instanceof NonDrivableRoadTile){
                 yMrng = (int)(Math.random() * this.getCity().length);
                 xMrng = (int)(Math.random() * this.getCity()[yMrng].length);
             }
