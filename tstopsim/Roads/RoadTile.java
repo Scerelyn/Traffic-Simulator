@@ -26,8 +26,8 @@ public abstract class RoadTile implements Visualizable{
     protected final static Color SIDE_WALK_COLOR = Color.LIGHT_GRAY;
     protected final static Color ROAD_COLOR = Color.LIGHT_GRAY.darker();
     protected final static Color GRASS_COLOR = Color.GREEN.darker().darker();
-    protected final static Color WATER_COLOR = Color.BLUE;
-    
+    protected final static Color WATER_COLOR = Color.CYAN.darker();
+    protected final static Color MIDLANE_PAINT = new Color(180,180,120);
     public RoadTile(double x, double y, Direction dir){
         setBounds(x*RoadTile.ROAD_DIMENTION,y*RoadTile.ROAD_DIMENTION,dir);
     }
