@@ -102,10 +102,10 @@ public class ParkingLotRoadTile extends NonDrivableRoadTile {
                 components.add(new ColoredRectangle2D(xPos + 0.1 * RoadTile.ROAD_DIMENTION, yPos, 0.8 * RoadTile.ROAD_DIMENTION, 0.025 * RoadTile.ROAD_DIMENTION, RoadTile.MIDLANE_PAINT));
                 components.add(new ColoredRectangle2D(xPos + 0.1 * RoadTile.ROAD_DIMENTION, yPos + 0.975 * RoadTile.ROAD_DIMENTION, 0.8 * RoadTile.ROAD_DIMENTION, 0.025 * RoadTile.ROAD_DIMENTION, RoadTile.MIDLANE_PAINT));
                 if (car1Prob <= 0.5) { 
-                    components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION, yPos + 0.60 * RoadTile.ROAD_DIMENTION, SIDE_LENGTH, SIDE_LENGTH, Color.MAGENTA));
-                    components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION, yPos + 0.60 * RoadTile.ROAD_DIMENTION, 0.2 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, Vehicle.offBacklight)); //top left
-                    components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION + 0.8 * SIDE_LENGTH, yPos + 0.60 * RoadTile.ROAD_DIMENTION, 0.2 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, Color.WHITE)); // top right
-                    components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION, yPos + 0.60 * RoadTile.ROAD_DIMENTION + 0.8 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, Vehicle.offBacklight)); //bottom left
+                    components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION, yPos + 0.60 * RoadTile.ROAD_DIMENTION, SIDE_LENGTH, SIDE_LENGTH, specialColor1));
+                    components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION, yPos + 0.60 * RoadTile.ROAD_DIMENTION, 0.2 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, Color.WHITE)); //top left
+                    components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION + 0.8 * SIDE_LENGTH, yPos + 0.60 * RoadTile.ROAD_DIMENTION, 0.2 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, Vehicle.offBacklight)); // top right
+                    components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION, yPos + 0.60 * RoadTile.ROAD_DIMENTION + 0.8 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, Color.WHITE)); //bottom left
                     components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION + 0.8 * SIDE_LENGTH, yPos + 0.60 * RoadTile.ROAD_DIMENTION + 0.8 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, Color.WHITE)); //bottom right
                     components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION + 0.2 * SIDE_LENGTH, yPos + 0.60 * RoadTile.ROAD_DIMENTION + 0.2 * SIDE_LENGTH, 0.2 * SIDE_LENGTH, 0.6 * SIDE_LENGTH, Color.CYAN)); //window
                     components.add(new ColoredRectangle2D(xPos + 0.15 * RoadTile.ROAD_DIMENTION + -0.2 * SIDE_LENGTH, yPos + 0.60 * RoadTile.ROAD_DIMENTION + 0.45 * SIDE_LENGTH, 0.7 * SIDE_LENGTH, 0.1 * SIDE_LENGTH, Color.BLACK)); //direction pointer));
