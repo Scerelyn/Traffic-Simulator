@@ -8,13 +8,13 @@ import tstopsim.Visual.Direction;
 public class DecorativeCenterRoadTile extends NonDrivableRoadTile {
     
     public DecorativeCenterRoadTile(double x, double y, Direction dir, Color c) {
-        super(x, y, dir, c);
+        super(x, y, dir, c, null);
     }
     
     @Override
     public ArrayList<ColoredRectangle2D> assemble() {
         ArrayList<ColoredRectangle2D> components = new ArrayList<>();
-        components.add( new ColoredRectangle2D(xPos,yPos,RoadTile.ROAD_DIMENTION,RoadTile.ROAD_DIMENTION,specialColor) );
+        components.add( new ColoredRectangle2D(xPos,yPos,RoadTile.ROAD_DIMENTION,RoadTile.ROAD_DIMENTION,specialColor1) );
         return components;
     }
 }

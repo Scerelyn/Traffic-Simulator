@@ -14,8 +14,8 @@ public class NonDrivableRoadTile extends RoadTile{
         super(x, y, d);
     }
     
-    public NonDrivableRoadTile(double x, double y, Direction d, Color c) {
-        super(x, y, d, c);
+    public NonDrivableRoadTile(double x, double y, Direction d, Color c1, Color c2) {
+        super(x, y, d, c1, c2);
     }
     
     @Override

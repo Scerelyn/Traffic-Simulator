@@ -26,6 +26,7 @@ Minimum map size is 3x3
 
 Extra Tiles:
 m - "M.C. Donalds" - functions like a nondrivable tile
+p* - Parking lot tile - also nondrivable, direction indicates where the end of the road spot faces (the direction you would drive into it at)
 
 Decorative tiles:
 A bit more complicated as this is a 3-4 characters long

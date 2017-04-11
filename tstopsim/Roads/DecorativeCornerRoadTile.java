@@ -14,7 +14,7 @@ public class DecorativeCornerRoadTile extends DecorativeCenterRoadTile {
     @Override
     public ArrayList<ColoredRectangle2D> assemble() {
         ArrayList<ColoredRectangle2D> components = new ArrayList<>();
-        ColoredRectangle2D mainPlate = new ColoredRectangle2D(xPos,yPos,RoadTile.ROAD_DIMENTION,RoadTile.ROAD_DIMENTION,specialColor);
+        ColoredRectangle2D mainPlate = new ColoredRectangle2D(xPos,yPos,RoadTile.ROAD_DIMENTION,RoadTile.ROAD_DIMENTION,specialColor1);
         components.add(mainPlate);
         switch(dir){
             case NORTH:

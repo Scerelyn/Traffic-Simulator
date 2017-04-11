@@ -22,7 +22,7 @@ public abstract class RoadTile implements Visualizable{
     protected ArrayList<Light> lights = new ArrayList<>();
     protected double xPos,yPos;
     protected Direction dir;
-    protected Color specialColor; //incase a tile has a color determined by an input file such as DecorativeCenterRoadTile's background color
+    protected Color specialColor1,specialColor2; //incase a tile has a color determined by an input file such as DecorativeCenterRoadTile's background color
     protected boolean hasSidewalk = true; //for sidewalkless variants
     protected final static Color SIDE_WALK_COLOR = Color.LIGHT_GRAY;
     protected final static Color ROAD_COLOR = Color.LIGHT_GRAY.darker();
@@ -34,8 +34,9 @@ public abstract class RoadTile implements Visualizable{
         setBounds(x*RoadTile.ROAD_DIMENTION,y*RoadTile.ROAD_DIMENTION,dir);
     }
     
-    public RoadTile(double x, double y, Direction dir, Color special){
-        this.specialColor = special;
+    public RoadTile(double x, double y, Direction dir, Color special1, Color special2){
+        this.specialColor1 = special1;
+        this.specialColor2 = special2;
         setBounds(x*RoadTile.ROAD_DIMENTION,y*RoadTile.ROAD_DIMENTION,dir);
     }
     
@@ -73,10 +74,12 @@ public abstract class RoadTile implements Visualizable{
      * @param x The x coordinate to move to
      * @param y The y coordinate to move to
      * @param dir The direction to face
-     * @param c The special color to assign
+     * @param c1 The special color to assign
+     * @param c2 The other special color to assign
      */
-    public final void setBounds(double x, double y, Direction dir, Color c){
-        this.specialColor = c;
+    public final void setBounds(double x, double y, Direction dir, Color c1, Color c2){
+        this.specialColor1 = c1;
+        this.specialColor2 = c2;
         setBounds(x,y,dir);
     }
     

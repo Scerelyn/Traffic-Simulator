@@ -152,27 +152,48 @@ public class Map extends JComponent {
                                 pos++;
                                 break;
                             case 'f':
-                                if (rowArr[i + 2] == 'y') { //has a character marking "hey no sidewalk"
-                                    switch (rowArr[i + 1]) {
-                                        case 'n':
-                                            tempRow.add(new StraightRoadTile(pos, row, Direction.NORTH, false));
-                                            pos++;
-                                            break;
-                                        case 's':
-                                            tempRow.add(new StraightRoadTile(pos, row, Direction.SOUTH, false));
-                                            pos++;
-                                            break;
-                                        case 'e':
-                                            tempRow.add(new StraightRoadTile(pos, row, Direction.EAST, false));
-                                            pos++;
-                                            break;
-                                        case 'w':
-                                            tempRow.add(new StraightRoadTile(pos, row, Direction.WEST, false));
-                                            pos++;
-                                            break;
+                                try {
+                                    if (rowArr[i + 2] == 'y') { //has a character marking "hey no sidewalk"
+                                        switch (rowArr[i + 1]) {
+                                            case 'n':
+                                                tempRow.add(new StraightRoadTile(pos, row, Direction.NORTH, false));
+                                                pos++;
+                                                break;
+                                            case 's':
+                                                tempRow.add(new StraightRoadTile(pos, row, Direction.SOUTH, false));
+                                                pos++;
+                                                break;
+                                            case 'e':
+                                                tempRow.add(new StraightRoadTile(pos, row, Direction.EAST, false));
+                                                pos++;
+                                                break;
+                                            case 'w':
+                                                tempRow.add(new StraightRoadTile(pos, row, Direction.WEST, false));
+                                                pos++;
+                                                break;
+                                        }
+                                        i++;
+                                    } else {
+                                        switch (rowArr[i + 1]) {
+                                            case 'n':
+                                                tempRow.add(new StraightRoadTile(pos, row, Direction.NORTH, true));
+                                                pos++;
+                                                break;
+                                            case 's':
+                                                tempRow.add(new StraightRoadTile(pos, row, Direction.SOUTH, true));
+                                                pos++;
+                                                break;
+                                            case 'e':
+                                                tempRow.add(new StraightRoadTile(pos, row, Direction.EAST, true));
+                                                pos++;
+                                                break;
+                                            case 'w':
+                                                tempRow.add(new StraightRoadTile(pos, row, Direction.WEST, true));
+                                                pos++;
+                                                break;
+                                        }
                                     }
-                                    i++;
-                                } else {
+                                } catch (IndexOutOfBoundsException e) {
                                     switch (rowArr[i + 1]) {
                                         case 'n':
                                             tempRow.add(new StraightRoadTile(pos, row, Direction.NORTH, true));
@@ -195,46 +216,68 @@ public class Map extends JComponent {
                                 i++;
                                 break;
                             case 't':
-                                if (rowArr[i+2] == 'y') {
-                                    switch (rowArr[i + 1]) {
-                                        case 'n':
-                                            tempRow.add(new TurnRoadTile(pos, row, Direction.NORTH,false));
-                                            pos++;
-                                            break;
-                                        case 's':
-                                            tempRow.add(new TurnRoadTile(pos, row, Direction.SOUTH,false));
-                                            pos++;
-                                            break;
-                                        case 'e':
-                                            tempRow.add(new TurnRoadTile(pos, row, Direction.EAST,false));
-                                            pos++;
-                                            break;
-                                        case 'w':
-                                            tempRow.add(new TurnRoadTile(pos, row, Direction.WEST,false));
-                                            pos++;
-                                            break;
+                                try {
+                                    if (rowArr[i + 2] == 'y') {
+                                        switch (rowArr[i + 1]) {
+                                            case 'n':
+                                                tempRow.add(new TurnRoadTile(pos, row, Direction.NORTH, false));
+                                                pos++;
+                                                break;
+                                            case 's':
+                                                tempRow.add(new TurnRoadTile(pos, row, Direction.SOUTH, false));
+                                                pos++;
+                                                break;
+                                            case 'e':
+                                                tempRow.add(new TurnRoadTile(pos, row, Direction.EAST, false));
+                                                pos++;
+                                                break;
+                                            case 'w':
+                                                tempRow.add(new TurnRoadTile(pos, row, Direction.WEST, false));
+                                                pos++;
+                                                break;
+                                        }
+                                        i++;
+                                    } else {
+                                        switch (rowArr[i + 1]) {
+                                            case 'n':
+                                                tempRow.add(new TurnRoadTile(pos, row, Direction.NORTH, true));
+                                                pos++;
+                                                break;
+                                            case 's':
+                                                tempRow.add(new TurnRoadTile(pos, row, Direction.SOUTH, true));
+                                                pos++;
+                                                break;
+                                            case 'e':
+                                                tempRow.add(new TurnRoadTile(pos, row, Direction.EAST, true));
+                                                pos++;
+                                                break;
+                                            case 'w':
+                                                tempRow.add(new TurnRoadTile(pos, row, Direction.WEST, true));
+                                                pos++;
+                                                break;
+                                        }
                                     }
-                                    i++;
-                                } else {
+                                } catch (IndexOutOfBoundsException e) {
                                     switch (rowArr[i + 1]) {
                                         case 'n':
-                                            tempRow.add(new TurnRoadTile(pos, row, Direction.NORTH,true));
+                                            tempRow.add(new TurnRoadTile(pos, row, Direction.NORTH, true));
                                             pos++;
                                             break;
                                         case 's':
-                                            tempRow.add(new TurnRoadTile(pos, row, Direction.SOUTH,true));
+                                            tempRow.add(new TurnRoadTile(pos, row, Direction.SOUTH, true));
                                             pos++;
                                             break;
                                         case 'e':
-                                            tempRow.add(new TurnRoadTile(pos, row, Direction.EAST,true));
+                                            tempRow.add(new TurnRoadTile(pos, row, Direction.EAST, true));
                                             pos++;
                                             break;
                                         case 'w':
-                                            tempRow.add(new TurnRoadTile(pos, row, Direction.WEST,true));
+                                            tempRow.add(new TurnRoadTile(pos, row, Direction.WEST, true));
                                             pos++;
                                             break;
                                     }
                                 }
+                                
                                 i++;
                                 break;
                             case 'h':
@@ -261,6 +304,27 @@ public class Map extends JComponent {
                             case 'm':
                                 tempRow.add(new McDonaldsRoadTile(pos, row));
                                 pos++;
+                                break;
+                            case 'p':
+                                switch(rowArr[i+1]){
+                                    case 'n':
+                                        tempRow.add(new ParkingLotRoadTile(pos,row,Direction.NORTH));
+                                        pos++;
+                                        break;
+                                    case 's':
+                                        tempRow.add(new ParkingLotRoadTile(pos,row,Direction.SOUTH));
+                                        pos++;
+                                        break;
+                                    case 'e':
+                                        tempRow.add(new ParkingLotRoadTile(pos,row,Direction.EAST));
+                                        pos++;
+                                        break;
+                                    case 'w':
+                                        tempRow.add(new ParkingLotRoadTile(pos,row,Direction.WEST));
+                                        pos++;
+                                        break;
+                                }
+                                i++;
                                 break;
                             case 'd': //decorative
                                 switch(rowArr[i + 1]){ //type of decorative

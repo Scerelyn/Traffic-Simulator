@@ -12,7 +12,9 @@ public class Vehicle implements Visualizable {
     private Direction dir;
     private ArrayList<ColoredRectangle2D> parts;
     private Map m;
-    private Color carColor,brakeLightColor = Color.RED;
+    private Color carColor;
+    private Color brakeLightColor = Color.RED;
+    public static final Color offBacklight = Color.RED.darker().darker();
     private boolean doingATurn = false;
     private int turnCooldown = 0;
 
@@ -175,7 +177,7 @@ public class Vehicle implements Visualizable {
         this.xPos = RoadTile.ROAD_DIMENTION*xMap + 0.15*RoadTile.ROAD_DIMENTION + xTile*0.4*RoadTile.ROAD_DIMENTION;
         this.yPos = RoadTile.ROAD_DIMENTION*yMap + 0.15*RoadTile.ROAD_DIMENTION + yTile*0.4*RoadTile.ROAD_DIMENTION;
         if(this.xPos != this.xLastPos || this.yPos != this.yLastPos){
-            this.brakeLightColor = Color.RED.darker().darker();
+            this.brakeLightColor = offBacklight;
         } else {
             this.brakeLightColor = Color.RED;
         }
