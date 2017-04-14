@@ -18,7 +18,7 @@ public class Runner {
         mainTimer.schedule(lc,0,1000);
         
         //m.addVehicle(new Vehicle(1,1,0,0,Direction.NORTH,m,Color.CYAN));
-        mainTimer.schedule(new VehicleMover(m.getCars(),0.016),0,10); 
+        mainTimer.schedule(new VehicleMover(m.getCars(),0.012),0,10); //start/stop bug is showing up again
         mainTimer.schedule(new Repainter(m),0,10);
         mainTimer.schedule(new InternalVehicleMove(m),0,1000);
         jf.add(m);
